@@ -30,7 +30,11 @@ sudo apt-get update
 
 sudo apt-get install libcurl4-gnutls-dev openssl1.0 libssl1.1-dev openssl uuid-dev mysql-workbench mysql-server mysql-client libmysqlclient-dev clang libicu-dev libpython2.7 libcurl3
 
-源代码安装glibc-2.27 http://ftp.gnu.org/gnu/glibc/glibc-2.27.tar.gz
+源代码安装glibc-2.27
+
+https://blog.csdn.net/liuchuanlong/article/details/79965727
+
+http://ftp.gnu.org/gnu/glibc/glibc-2.27.tar.gz
 
 .bashrc 加入
 
