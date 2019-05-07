@@ -30,6 +30,8 @@ sudo apt-get update
 
 sudo apt-get install libcurl4-gnutls-dev openssl1.0 libssl1.1-dev openssl uuid-dev mysql-workbench mysql-server mysql-client libmysqlclient-dev clang libicu-dev libpython2.7 libcurl3
 
+源代码安装glibc-2.27
+
 .bashrc 加入
 
 export SWIFT_HOME=/opt/swift
