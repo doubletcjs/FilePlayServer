@@ -19,8 +19,11 @@ sudo apt-get install libcurl4-gnutls-dev openssl1.0 libssl1.1-dev openssl uuid-d
 .bashrc 加入
 
 export SWIFT_HOME=/opt/swift
+
 export PATH=$SWIFT_HOME/usr/bin:$PATH
+
 export LD_LIBRARY_PATH=$SWIFT_HOME/usr/lib:$LD_LIBRARY_PATH
+
 export LIBRARY_PATH=$SWIFT_HOME/usr/lib:$LIBRARY_PATH
 
 source .bashrc
