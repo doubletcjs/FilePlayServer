@@ -15,3 +15,8 @@ set password for 'root'@'localhost'=password('新密码');(MySQL 5.7.5 and earli
 ubuntu:
 
 sudo apt-get install libcurl4-gnutls-dev openssl1.0 libssl1.1-dev openssl uuid-dev mysql-workbench mysql-server mysql-client libmysqlclient-dev clang libicu-dev
+
+# ssh上传文件到服务器
+scp /path/filename username@servername:/path/
+# 配置MySQL
+sudo mysql_secure_installation
