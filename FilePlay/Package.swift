@@ -1,20 +1,19 @@
-// swift-tools-version:4.0
-
+// swift-tools-version:4.2
+// Generated automatically by Perfect Assistant
+// Date: 2019-05-07 17:07:41 +0000
 import PackageDescription
 
-private let kProjectName: String = "FilePlay" 
-
 let package = Package(
-	name: kProjectName,
+	name: "FilePlay",
 	products: [
-		.executable(name: kProjectName, targets: [kProjectName])
+		.executable(name: "FilePlay", targets: ["FilePlay"])
 	],
 	dependencies: [
-		.package(url: "https://github.com/PerfectlySoft/Perfect-HTTPServer.git", from: "3.0.0"),
-        .package(url: "https://github.com/PerfectlySoft/Perfect-MySQL.git", from: "3.0.0"),
-        .package(url: "https://github.com/PerfectlySoft/Perfect-Logger.git", from: "3.0.0"),
+		.package(url: "https://github.com/PerfectlySoft/Perfect-HTTPServer.git", "3.0.0"..<"4.0.0"),
+		.package(url: "https://github.com/PerfectlySoft/Perfect-MySQL.git", "3.0.0"..<"4.0.0"),
+		.package(url: "https://github.com/PerfectlySoft/Perfect-Logger.git", "3.0.0"..<"4.0.0")
 	],
 	targets: [
-		.target(name: kProjectName, dependencies: ["PerfectHTTPServer", "PerfectMySQL", "PerfectLogger"])
+		.target(name: "FilePlay", dependencies: ["PerfectHTTPServer", "PerfectMySQL", "PerfectLogger"])
 	]
 )

@@ -2675,17 +2675,17 @@
          children = (
             "PerfectHTTPServer::PerfectCHTTPParser::Product",
             "PerfectCRUD::PerfectCRUD::Product",
-            "PerfectMySQL::PerfectMySQL::Product",
-            "FilePlay::FilePlay::Product",
             "PerfectHTTPServer::PerfectHTTPServer::Product",
+            "PerfectMySQL::PerfectMySQL::Product",
             "PerfectCZlib::PerfectCZlib::Product",
-            "PerfectLogger::PerfectLogger::Product",
-            "PerfectCURL::PerfectCURL::Product",
-            "PerfectLib::PerfectLib::Product",
             "PerfectHTTP::PerfectHTTP::Product",
-            "COpenSSL::COpenSSL::Product",
             "PerfectCrypto::PerfectCrypto::Product",
             "PerfectThread::PerfectThread::Product",
+            "COpenSSL::COpenSSL::Product",
+            "FilePlay::FilePlay::Product",
+            "PerfectCURL::PerfectCURL::Product",
+            "PerfectLib::PerfectLib::Product",
+            "PerfectLogger::PerfectLogger::Product",
             "PerfectNet::PerfectNet::Product"
          );
          name = "Products";
@@ -4253,7 +4253,7 @@
             );
             SWIFT_FORCE_DYNAMIC_LINK_STDLIB = "YES";
             SWIFT_FORCE_STATIC_LINK_STDLIB = "NO";
-            SWIFT_VERSION = "4.0";
+            SWIFT_VERSION = "4.2";
             TARGET_NAME = "FilePlay";
          };
          name = "Debug";
@@ -4304,7 +4304,7 @@
             );
             SWIFT_FORCE_DYNAMIC_LINK_STDLIB = "YES";
             SWIFT_FORCE_STATIC_LINK_STDLIB = "NO";
-            SWIFT_VERSION = "4.0";
+            SWIFT_VERSION = "4.2";
             TARGET_NAME = "FilePlay";
          };
          name = "Release";
@@ -4543,15 +4543,15 @@
             LD = "/usr/bin/true";
             OTHER_SWIFT_FLAGS = (
                "-swift-version",
-               "4",
+               "4.2",
                "-I",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4",
+               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2",
                "-target",
                "x86_64-apple-macosx10.10",
                "-sdk",
                "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk"
             );
-            SWIFT_VERSION = "4.0";
+            SWIFT_VERSION = "4.2";
          };
          name = "Debug";
       };
@@ -4561,15 +4561,15 @@
             LD = "/usr/bin/true";
             OTHER_SWIFT_FLAGS = (
                "-swift-version",
-               "4",
+               "4.2",
                "-I",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4",
+               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2",
                "-target",
                "x86_64-apple-macosx10.10",
                "-sdk",
                "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk"
             );
-            SWIFT_VERSION = "4.0";
+            SWIFT_VERSION = "4.2";
          };
          name = "Release";
       };
