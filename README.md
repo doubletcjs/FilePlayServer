@@ -20,3 +20,6 @@ sudo apt-get install libcurl4-gnutls-dev openssl1.0 libssl1.1-dev openssl uuid-d
 scp /path/filename username@servername:/path/
 # 配置MySQL
 https://www.cnblogs.com/sonofdark/p/10824574.html
+
+彻底删除
+https://blog.csdn.net/iehadoop/article/details/82961264
