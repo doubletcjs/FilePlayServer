@@ -180,7 +180,85 @@ class BasicRoutes {
     }
     // MARK: - 举报
     private func reportFunctionHandle(request: HTTPRequest, response: HTTPResponse) {
+        var type: String = ""
         
+        if request.param(name: "type") != nil {
+            type = request.param(name: "type")!
+        }
+        
+        guard type.count != 0 else {
+            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
+            response.completed()
+            
+            return
+        }
+        
+        var authorId: String = ""
+        if request.param(name: "authorId") != nil {
+            authorId = request.param(name: "authorId")!
+        }
+        
+        guard authorId.count != 0 else {
+            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
+            response.completed()
+            
+            return
+        }
+        
+        var requestJson = ""
+        if type == "0" {
+            var userId: String = ""
+            if request.param(name: "userId") != nil {
+                userId = request.param(name: "userId")!
+            }
+            
+            guard userId.count != 0 else {
+                response.setBody(string: Utils.failureResponseJson("请求参数错误"))
+                response.completed()
+                
+                return
+            }
+            
+            requestJson = ReportOperator().reportAccount(authorId, userId)
+        } else if type == "1" {
+            var dynamicId: String = ""
+            if request.param(name: "dynamicId") != nil {
+                dynamicId = request.param(name: "dynamicId")!
+            }
+            
+            guard dynamicId.count != 0 else {
+                response.setBody(string: Utils.failureResponseJson("请求参数错误"))
+                response.completed()
+                
+                return
+            }
+            
+            requestJson = ReportOperator().reportDynamic(authorId, dynamicId)
+        } else if type == "2" {
+            var commentId: String = ""
+            if request.param(name: "commentId") != nil {
+                commentId = request.param(name: "commentId")!
+            }
+            
+            guard commentId.count != 0 else {
+                response.setBody(string: Utils.failureResponseJson("请求参数错误"))
+                response.completed()
+                
+                return
+            }
+            
+            requestJson = ReportOperator().reportComment(authorId, commentId)
+        }
+        
+        guard requestJson.count != 0 else {
+            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
+            response.completed()
+            
+            return
+        }
+        
+        response.appendBody(string: requestJson)
+        response.completed()
     }
     // MARK: - 动态点赞
     private func dynamiPraiseHandle(request: HTTPRequest, response: HTTPResponse) {

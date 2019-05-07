@@ -71,7 +71,7 @@ class Utils {
     class func successResponseJson(_ jsonObject: Any) -> String {
         BaseResponseJson[ResultCodeKey] = RequestSuccessCode
         BaseResponseJson[ResultDataKey] = jsonObject
-        BaseResponseJson[ResultMessageKey] = ""
+        BaseResponseJson[ResultMessageKey] = "成功"
         
         guard let json = try? BaseResponseJson.jsonEncodedString() else {
             return ""
