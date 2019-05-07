@@ -14,6 +14,20 @@ set password for 'root'@'localhost'=password('新密码');(MySQL 5.7.5 and earli
 
 ubuntu:
 
+16.04系统需更新gcc(5.5.0以上)
+
+sudo apt-get update
+
+sudo apt-get install build-essential software-properties-common -y
+
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+
+sudo apt-get update
+
+sudo apt-get install gcc-snapshot -y
+
+sudo apt-get update
+
 sudo apt-get install libcurl4-gnutls-dev openssl1.0 libssl1.1-dev openssl uuid-dev mysql-workbench mysql-server mysql-client libmysqlclient-dev clang libicu-dev
 
 .bashrc 加入
