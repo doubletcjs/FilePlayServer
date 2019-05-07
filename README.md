@@ -28,7 +28,7 @@ sudo apt-get install gcc-snapshot -y
 
 sudo apt-get update
 
-sudo apt-get install libcurl4-gnutls-dev openssl1.0 libssl1.1-dev openssl uuid-dev mysql-workbench mysql-server mysql-client libmysqlclient-dev clang libicu-dev
+sudo apt-get install libcurl4-gnutls-dev openssl1.0 libssl1.1-dev openssl uuid-dev mysql-workbench mysql-server mysql-client libmysqlclient-dev clang libicu-dev libpython2.7
 
 .bashrc 加入
 
