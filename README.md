@@ -20,6 +20,7 @@ sudo apt-get install libcurl4-gnutls-dev openssl1.0 libssl1.1-dev openssl uuid-d
 scp /path/filename username@servername:/path/
 # 配置MySQL
 sudo mysql_secure_installation
+
 #1
 VALIDATE PASSWORD PLUGIN can be used to test passwords...
 Press y|Y for Yes, any other key for No: N (我的选项)
