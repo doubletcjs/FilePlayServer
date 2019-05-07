@@ -16,6 +16,9 @@ ubuntu:
 
 sudo apt-get install libcurl4-gnutls-dev openssl1.0 libssl1.1-dev openssl uuid-dev mysql-workbench mysql-server mysql-client libmysqlclient-dev clang libicu-dev
 
+.bashrc 加入 export PATH=/path/to/Swift/usr/bin:"${PATH}"
+source .bashrc
+
 # ssh上传文件到服务器
 scp /path/filename username@servername:/path/
 # 配置MySQL
