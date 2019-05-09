@@ -35,6 +35,7 @@ class DynamicOperator: DataBaseOperator {
         
         if mysql.query(statement: statement) == false {
             Utils.logError("发布动态", mysql.errorMessage())
+            responseJson = Utils.failureResponseJson("发布动态失败")
         } else {
             responseJson = Utils.successResponseJson(["isSuccessful": true])
         }

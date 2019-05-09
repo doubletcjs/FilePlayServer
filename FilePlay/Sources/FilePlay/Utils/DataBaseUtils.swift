@@ -17,14 +17,19 @@ private let password = "8707gtt04cjsd,./"   //数据库密码
 public let accounttable = "account_table"
 public let reportusertable = "report_user"
 public let attentionfantable = "attention_fan"
+
+public let movietable = "movie_table"
+
 public let watchmovietable = "watch_movie"
 public let wantmovietable = "want_movie"
+
 public let dynamictable = "dynamic_table"
 public let reportdynamictable = "report_dynamic"
-public let reportcommenttable = "report_comment"
 public let praisedynamictable  = "praise_dynamic"
-public let movietable = "movie_table"
+
 public let commenttable = "comment_table"
+public let reportcommenttable = "report_comment"
+public let praisecommenttable  = "praise_comment"
 
 // MARK: - 连接MySql数据库的类
 class DataBaseConnent {

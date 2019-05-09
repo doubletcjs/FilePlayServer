@@ -69,8 +69,14 @@ class BasicRoutes {
             baseRoutes.add(method: .post, uri: "/dynamiPraise", handler: dynamiPraiseHandle)
             // 用户动态列表
             baseRoutes.add(method: .post, uri: "/accountDynamicList", handler: accountDynamicListHandle)
-            //举报
+            
+            // 举报
             baseRoutes.add(method: .post, uri: "/reportFunction", handler: reportFunctionHandle)
+            
+            // 发评论
+            baseRoutes.add(method: .post, uri: "/postComment", handler: postCommentHandle)
+            // 动态评论列表
+            baseRoutes.add(method: .post, uri: "/dynamicCommentList", handler: dynamicCommentListHandle)
             
             return baseRoutes
         }
@@ -327,6 +333,52 @@ class BasicRoutes {
         }
         
         let requestJson = DynamicOperator().dynamicList(params: dict)
+        response.appendBody(string: requestJson)
+        response.completed()
+    }
+    // MARK: - 动态评论列表
+    private func dynamicCommentListHandle(request: HTTPRequest, response: HTTPResponse) {
+        let params = request.params()
+        var dict: [String: Any] = [:]
+        
+        if params.count > 0 {
+            for idx in 0...params.count-1 {
+                let param: (String, String) = params[idx]
+                dict[param.0] = param.1
+            }
+        }
+        
+        guard dict.keys.count == 4 else {
+            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
+            response.completed()
+            
+            return
+        }
+        
+        let requestJson = CommentOperator().dynamicCommentList(params: dict)
+        response.appendBody(string: requestJson)
+        response.completed()
+    }
+    // MARK: - 发评论
+    private func postCommentHandle(request: HTTPRequest, response: HTTPResponse) {
+        let params = request.params()
+        var dict: [String: Any] = [:]
+        
+        if params.count > 0 {
+            for idx in 0...params.count-1 {
+                let param: (String, String) = params[idx]
+                dict[param.0] = param.1
+            }
+        }
+        
+        guard dict.keys.count >= 4 else {
+            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
+            response.completed()
+            
+            return
+        }
+        
+        let requestJson = CommentOperator().postCommentHandle(params: dict)
         response.appendBody(string: requestJson)
         response.completed()
     }
