@@ -1075,7 +1075,6 @@
 		OBJ_412 /* SysProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SysProcess.swift; sourceTree = "<group>"; };
 		OBJ_413 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		OBJ_414 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = /Users/4work/Documents/FilePlayServer/FilePlay/.build/checkouts/PerfectLib/Package.swift; sourceTree = "<group>"; };
-		OBJ_430 /* WebRoot */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WebRoot; sourceTree = SOURCE_ROOT; };
 		OBJ_44 /* Coding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
 		OBJ_45 /* CodingBindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodingBindings.swift; sourceTree = "<group>"; };
 		OBJ_46 /* CodingJoins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodingJoins.swift; sourceTree = "<group>"; };
@@ -1885,7 +1884,6 @@
 				OBJ_19 /* Tests */,
 				OBJ_20 /* Dependencies */,
 				OBJ_415 /* Products */,
-				OBJ_430 /* WebRoot */,
 			);
 			name = "";
 			sourceTree = "<group>";
