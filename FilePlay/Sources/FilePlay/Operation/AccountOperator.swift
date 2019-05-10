@@ -194,12 +194,12 @@ class AccountOperator: DataBaseOperator {
     /// - Returns: 返回JSON数据
     func passwordLogin(params: [String: Any]) -> String {
         var mobile: String = ""
-        if params["mobile"] != nil {
+        if let _: Any = params["mobile"] {
             mobile = params["mobile"] as! String
         }
         
         var nickname: String = ""
-        if params["nickname"] != nil {
+        if let _: Any = params["nickname"] {
             nickname = params["nickname"] as! String
         }
         
