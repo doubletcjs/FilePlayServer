@@ -197,21 +197,21 @@ class AccountOperator: DataBaseOperator {
         if let _: Any = params["mobile"] {
             mobile = params["mobile"] as! String
         } else {
-            Utils.logError("手机号 空", mysql.errorMessage())
+            Utils.logError("手机号 空", "空")
         }
         
         var nickname: String = ""
         if let _: Any = params["nickname"] {
             nickname = params["nickname"] as! String
         } else {
-            Utils.logError("nickname 空", mysql.errorMessage())
+            Utils.logError("nickname 空", "空")
         }
         
         var password: String = ""
         if let _: Any = params["password"] {
             password = params["password"] as! String
         } else {
-            Utils.logError("password 空", mysql.errorMessage())
+            Utils.logError("password 空", "空")
         }
         
         if mobile.count == 0 && nickname.count == 0 {
@@ -219,10 +219,13 @@ class AccountOperator: DataBaseOperator {
         } else if password.count == 0 {
             responseJson = Utils.failureResponseJson("密码不能为空")
         } else {
+            Utils.logError("报错", "报错断点1")
             let accountStatus = checkAccount(mobile: mobile, nickname: nickname, userId: "")
+            Utils.logError("报错", "报错断点2")
             if accountStatus == 0 {
                 responseJson = Utils.failureResponseJson("用户不存在")
             } else if accountStatus == 1 {
+                Utils.logError("报错", "报错断点3")
                 var whereStatement = ""
                 if mobile.count > 0 {
                     whereStatement = "mobile = '\(mobile)'"
@@ -234,6 +237,7 @@ class AccountOperator: DataBaseOperator {
                 
                 let statement = "SELECT userId, AES_DECRYPT(password, '\(AES_ENCRYPT_KEY)') FROM \(accounttable) WHERE \(whereStatement)"
                 
+                Utils.logError("报错", "报错断点4")
                 if mysql.query(statement: statement) == false {
                     Utils.logError("账号密码登录", mysql.errorMessage())
                     responseJson = Utils.failureResponseJson("登录失败")
