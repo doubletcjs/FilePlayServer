@@ -246,17 +246,21 @@ class AccountOperator: DataBaseOperator {
                     var passwd = ""
                     var userId = ""
                     results.forEachRow { (row) in
+                        Utils.logError("报错", "报错断点5")
                         for _ in 0...row.count-1 {
+                            Utils.logError("报错", "报错断点5-1")
                             passwd = row[1]!
+                            Utils.logError("报错", "报错断点5-2")
                             userId = row[0]!
+                            Utils.logError("报错", "报错断点5-3")
                             break
                         }
                     }
                     
                     if passwd == password {
-                        Utils.logError("报错", "报错断点5")
-                        responseJson = self.getAccount(userId: userId, mobile: mobile, loginId: "")
                         Utils.logError("报错", "报错断点6")
+                        responseJson = self.getAccount(userId: userId, mobile: mobile, loginId: "")
+                        Utils.logError("报错", "报错断点7")
                     } else {
                         responseJson = Utils.failureResponseJson("密码错误")
                     }
