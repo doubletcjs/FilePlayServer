@@ -194,38 +194,24 @@ class AccountOperator: DataBaseOperator {
     /// - Returns: 返回JSON数据
     func passwordLogin(params: [String: Any]) -> String {
         var mobile: String = ""
-        if let _: Any = params["mobile"] {
+        if params["mobile"] != nil {
             mobile = params["mobile"] as! String
-        } else {
-            Utils.logError("手机号 空", "空")
         }
         
         var nickname: String = ""
-        if let _: Any = params["nickname"] {
+        if params["nickname"] != nil {
             nickname = params["nickname"] as! String
-        } else {
-            Utils.logError("nickname 空", "空")
-        }
-        
-        var password: String = ""
-        if let _: Any = params["password"] {
-            password = params["password"] as! String
-        } else {
-            Utils.logError("password 空", "空")
         }
         
         if mobile.count == 0 && nickname.count == 0 {
             responseJson = Utils.failureResponseJson("账号不能为空，手机号或昵称")
-        } else if password.count == 0 {
-            responseJson = Utils.failureResponseJson("密码不能为空")
         } else {
-            Utils.logError("报错", "报错断点1")
+            let password: String = params["password"] as! String
+            
             let accountStatus = checkAccount(mobile: mobile, nickname: nickname, userId: "")
-            Utils.logError("报错", "报错断点2")
             if accountStatus == 0 {
                 responseJson = Utils.failureResponseJson("用户不存在")
             } else if accountStatus == 1 {
-                Utils.logError("报错", "报错断点3")
                 var whereStatement = ""
                 if mobile.count > 0 {
                     whereStatement = "mobile = '\(mobile)'"
@@ -237,7 +223,6 @@ class AccountOperator: DataBaseOperator {
                 
                 let statement = "SELECT userId, AES_DECRYPT(password, '\(AES_ENCRYPT_KEY)') FROM \(accounttable) WHERE \(whereStatement)"
                 
-                Utils.logError("报错", "报错断点4")
                 if mysql.query(statement: statement) == false {
                     Utils.logError("账号密码登录", mysql.errorMessage())
                     responseJson = Utils.failureResponseJson("登录失败")
@@ -246,24 +231,18 @@ class AccountOperator: DataBaseOperator {
                     var passwd = ""
                     var userId = ""
                     results.forEachRow { (row) in
-                        Utils.logError("报错", "报错断点5")
                         for _ in 0...row.count-1 {
-                            Utils.logError("报错", "报错断点5-1")
-                            passwd = row[1]!
-                            Utils.logError("报错", "报错断点5-2")
                             userId = row[0]!
-                            Utils.logError("报错", "报错断点5-3")
+                            //passwd = row[1]!
                             break
                         }
                     }
                     
-                    if passwd == password {
-                        Utils.logError("报错", "报错断点6")
-                        responseJson = self.getAccount(userId: userId, mobile: mobile, loginId: "")
-                        Utils.logError("报错", "报错断点7")
-                    } else {
-                        responseJson = Utils.failureResponseJson("密码错误")
-                    }
+//                    if passwd == password {
+//                        responseJson = self.getAccount(userId: userId, mobile: mobile, loginId: "")
+//                    } else {
+//                        responseJson = Utils.failureResponseJson("密码错误")
+//                    }
                 }
             } else if accountStatus == 2 {
                 responseJson = Utils.failureResponseJson("登录失败")
