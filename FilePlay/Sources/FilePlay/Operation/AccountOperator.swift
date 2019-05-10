@@ -196,11 +196,15 @@ class AccountOperator: DataBaseOperator {
         var mobile: String = ""
         if let _: Any = params["mobile"] {
             mobile = params["mobile"] as! String
+        } else {
+            Utils.logError("手机号 空", mysql.errorMessage())
         }
         
         var nickname: String = ""
         if let _: Any = params["nickname"] {
             nickname = params["nickname"] as! String
+        } else {
+            Utils.logError("nickname 空", mysql.errorMessage())
         }
         
         if mobile.count == 0 && nickname.count == 0 {
