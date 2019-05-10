@@ -5,7 +5,7 @@
 //  Created by 4work on 2019/3/8.
 //
 
-import Foundation 
+import Foundation
 
 class AccountOperator: DataBaseOperator {
     // MARK: - 手机号、昵称、用户id(三选一)是否存在
@@ -236,8 +236,11 @@ class AccountOperator: DataBaseOperator {
                         }
                     }
                     
+                    Utils.logError("账号", userId)
+                    Utils.logError("密码", passwd)
                     if passwd == password {
                         responseJson = self.getAccount(userId: userId, mobile: mobile, loginId: "")
+                        Utils.logError("返回内容", responseJson)
                     } else {
                         responseJson = Utils.failureResponseJson("密码错误")
                     }
