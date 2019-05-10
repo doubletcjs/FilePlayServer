@@ -254,7 +254,9 @@ class AccountOperator: DataBaseOperator {
                     }
                     
                     if passwd == password {
+                        Utils.logError("报错", "报错断点5")
                         responseJson = self.getAccount(userId: userId, mobile: mobile, loginId: "")
+                        Utils.logError("报错", "报错断点6")
                     } else {
                         responseJson = Utils.failureResponseJson("密码错误")
                     }
