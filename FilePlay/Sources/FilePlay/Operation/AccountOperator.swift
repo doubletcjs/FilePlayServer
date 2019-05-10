@@ -207,11 +207,18 @@ class AccountOperator: DataBaseOperator {
             Utils.logError("nickname 空", mysql.errorMessage())
         }
         
+        var password: String = ""
+        if let _: Any = params["password"] {
+            password = params["password"] as! String
+        } else {
+            Utils.logError("password 空", mysql.errorMessage())
+        }
+        
         if mobile.count == 0 && nickname.count == 0 {
             responseJson = Utils.failureResponseJson("账号不能为空，手机号或昵称")
+        } else if password.count == 0 {
+            responseJson = Utils.failureResponseJson("密码不能为空")
         } else {
-            let password: String = params["password"] as! String
-            
             let accountStatus = checkAccount(mobile: mobile, nickname: nickname, userId: "")
             if accountStatus == 0 {
                 responseJson = Utils.failureResponseJson("用户不存在")
