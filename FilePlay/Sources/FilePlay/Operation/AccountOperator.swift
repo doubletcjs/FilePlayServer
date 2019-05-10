@@ -5,9 +5,7 @@
 //  Created by 4work on 2019/3/8.
 //
 
-import Foundation
-
-private let AES_ENCRYPT_KEY = "~!@#$%^&*()_+com.samcooperstudio.judou_1234567890-=,./"
+import Foundation 
 
 class AccountOperator: DataBaseOperator {
     // MARK: - 手机号、昵称、用户id(三选一)是否存在
@@ -169,7 +167,7 @@ class AccountOperator: DataBaseOperator {
             let current = Date()
             let date = Utils.dateToString(date: current, format: "yyyy-MM-dd HH:mm:ss")
             
-            let values = "('\(mobile)', AES_ENCRYPT('\(password)', '\(AES_ENCRYPT_KEY)'), ('\(nickname)'), ('\(portrait)'), ('\(date)'))"
+            let values = "('\(mobile)', '\(password)', ('\(nickname)'), ('\(portrait)'), ('\(date)'))"
             let statement = "INSERT INTO \(accounttable) (mobile, password, nickname, portrait, date) VALUES \(values)"
             
             if mysql.query(statement: statement) == false {
@@ -221,7 +219,7 @@ class AccountOperator: DataBaseOperator {
                     whereStatement = "nickname = '\(nickname)'"
                 }
                 
-                let statement = "SELECT userId, AES_DECRYPT(password, '\(AES_ENCRYPT_KEY)') FROM \(accounttable) WHERE \(whereStatement)"
+                let statement = "SELECT userId, password FROM \(accounttable) WHERE \(whereStatement)"
                 
                 if mysql.query(statement: statement) == false {
                     Utils.logError("账号密码登录", mysql.errorMessage())
@@ -232,17 +230,17 @@ class AccountOperator: DataBaseOperator {
                     var userId = ""
                     results.forEachRow { (row) in
                         for _ in 0...row.count-1 {
+                            passwd = row[1]!
                             userId = row[0]!
-                            //passwd = row[1]!
                             break
                         }
                     }
                     
-//                    if passwd == password {
-//                        responseJson = self.getAccount(userId: userId, mobile: mobile, loginId: "")
-//                    } else {
-//                        responseJson = Utils.failureResponseJson("密码错误")
-//                    }
+                    if passwd == password {
+                        responseJson = self.getAccount(userId: userId, mobile: mobile, loginId: "")
+                    } else {
+                        responseJson = Utils.failureResponseJson("密码错误")
+                    }
                 }
             } else if accountStatus == 2 {
                 responseJson = Utils.failureResponseJson("登录失败")
@@ -262,7 +260,7 @@ class AccountOperator: DataBaseOperator {
         if accountStatus == 0 {
             responseJson = Utils.failureResponseJson("用户不存在")
         } else if accountStatus == 1 {
-            let statement = "SELECT AES_DECRYPT(password, '\(AES_ENCRYPT_KEY)') FROM \(accounttable) WHERE mobile = '\(mobile)'"
+            let statement = "SELECT password FROM \(accounttable) WHERE mobile = '\(mobile)'"
             if mysql.query(statement: statement) == false {
                 Utils.logError("密码检验", mysql.errorMessage())
                 responseJson = Utils.failureResponseJson("密码检验失败")
@@ -279,7 +277,7 @@ class AccountOperator: DataBaseOperator {
                 if passwd == password {
                     responseJson = Utils.failureResponseJson("新密码与原密码相同")
                 } else {
-                    let statement = "UPDATE \(accounttable) SET password = AES_ENCRYPT('\(password)', '\(AES_ENCRYPT_KEY)') WHERE mobile = '\(mobile)'"
+                    let statement = "UPDATE \(accounttable) SET password = '\(password)' WHERE mobile = '\(mobile)'"
                     
                     if mysql.query(statement: statement) == false {
                         Utils.logError("重置密码", mysql.errorMessage())
