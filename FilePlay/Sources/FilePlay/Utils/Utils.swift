@@ -83,7 +83,7 @@ class Utils {
     class func logError(_ functionName: String, _ msg: Any) -> Void {
         let dict: [String: Any] = ["日期": Utils.dateToString(date: Date(), format: "yyyy.MM.dd HH:mm:ss:SSS"), "方法名": "\(functionName)", "信息内容": "\(msg)"]
         
-        LogFile.info("\(Utils.objectToJson(dict))")
+        LogFile.error("\(Utils.objectToJson(dict))")
     }
     // MARK: - 删除服务器本地文件
     class func deleteLocalFile(_ absolutePath: String) -> Void {
