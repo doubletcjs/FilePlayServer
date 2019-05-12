@@ -73,6 +73,8 @@ class DynamicOperator: DataBaseOperator {
             "\(movietable).poster_path",
             "\(movietable).genreids",
             "\(movietable).isEpisode",
+            "COUNT(DISTINCT \(wantmovietable).movieId) wantCount",
+            "COUNT(DISTINCT \(watchmovietable).movieId) watchCount",
             "\(accounttable).userId",
             "\(accounttable).nickname",
             "\(accounttable).portrait",
@@ -99,7 +101,9 @@ class DynamicOperator: DataBaseOperator {
             "release_date",
             "poster_path",
             "genreids",
-            "isEpisode"]
+            "isEpisode",
+            "wantCount",
+            "watchCount"]
         
         let accountValueOfKeys: [String] = [
             "\(accounttable).userId",
@@ -113,6 +117,8 @@ class DynamicOperator: DataBaseOperator {
             "LEFT JOIN \(commenttable) ON (\(commenttable).dynamicId = \(dynamictable).objectId)",
             "LEFT JOIN \(praisedynamictable) praisedynamictable ON (praisedynamictable.authorId = '\(loginId)' AND praisedynamictable.dynamicId = \(dynamictable).objectId)",
             "LEFT JOIN \(movietable) ON (\(movietable).movieId = \(dynamictable).movieId)",
+            "LEFT JOIN \(wantmovietable) ON (\(wantmovietable).userId = '\(loginId)' AND \(wantmovietable).movieId = \(dynamictable).movieId)",
+            "LEFT JOIN \(watchmovietable) ON (\(watchmovietable).userId = '\(loginId)' AND \(watchmovietable).movieId = \(dynamictable).movieId)",
             "LEFT JOIN \(accounttable) ON (\(accounttable).userId = \(dynamictable).authorId)"]
         
         let statement = "SELECT \(keys.joined(separator: ", ")) FROM \(dynamictable) \(statements.joined(separator: " ")) WHERE \(dynamictable).authorId = '\(userId)' GROUP BY \(dynamictable).objectId DESC LIMIT \(currentPage*pageSize), \(pageSize)"

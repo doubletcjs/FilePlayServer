@@ -13,7 +13,12 @@ import PerfectLib
 public let kProjectName: String = "FilePlay" 
 public let kServerPort: UInt16 = 6968
 public let kServerName = "localhost"
+
+#if os(Linux)
 public let kServerDocumentRoot = "/opt/WebRoot"
+#else
+public let kServerDocumentRoot = "./WebRoot"
+#endif
 
 private let RequestSuccessCode: String = "1000"
 private let RequestFailureCode: String = "1001"
