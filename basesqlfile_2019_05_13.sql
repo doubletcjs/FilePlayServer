@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.25, for osx10.14 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.26, for Linux (x86_64)
 --
--- Host: localhost    Database: fileplay
+-- Host: localhost    Database: FilePlay
 -- ------------------------------------------------------
--- Server version	5.7.25
+-- Server version	5.7.26-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -15,7 +15,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-set character set utf8;
+SET NAMES utf8;
 
 --
 -- Table structure for table `account_table`
@@ -34,7 +34,7 @@ CREATE TABLE `account_table` (
   `introduce` varchar(512) NOT NULL DEFAULT '',
   `password` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10002 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `account_table` (
 
 LOCK TABLES `account_table` WRITE;
 /*!40000 ALTER TABLE `account_table` DISABLE KEYS */;
-INSERT INTO `account_table` VALUES (10000,'少爷','',1,'15217224985','2019-03-09 11:08:01','错过一时 错过一生','870704');
+INSERT INTO `account_table` VALUES (10000,'','',1,'','1970-01-01 00:00:00','',''),(10001,'少爷','/files/portrait/10001/portrait_1557558985981.3472_0.jpg',1,'15217224985','2019-05-11 15:15:19','鸡毛兄','870704');
 /*!40000 ALTER TABLE `account_table` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,7 +59,7 @@ CREATE TABLE `attention_fan` (
   `authorId` int(20) unsigned NOT NULL,
   `userId` int(20) unsigned NOT NULL,
   PRIMARY KEY (`objectId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,6 +68,7 @@ CREATE TABLE `attention_fan` (
 
 LOCK TABLES `attention_fan` WRITE;
 /*!40000 ALTER TABLE `attention_fan` DISABLE KEYS */;
+INSERT INTO `attention_fan` VALUES (10000,0,0);
 /*!40000 ALTER TABLE `attention_fan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,7 +87,7 @@ CREATE TABLE `comment_table` (
   `replyId` int(20) unsigned NOT NULL,
   `dynamicId` int(20) unsigned NOT NULL,
   PRIMARY KEY (`objectId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +96,7 @@ CREATE TABLE `comment_table` (
 
 LOCK TABLES `comment_table` WRITE;
 /*!40000 ALTER TABLE `comment_table` DISABLE KEYS */;
-INSERT INTO `comment_table` VALUES (1,10000,'‘Good’','2019-05-09 16:31:33',0,10014);
+INSERT INTO `comment_table` VALUES (10000,0,'','1970-01-01 00:00:00',0,0);
 /*!40000 ALTER TABLE `comment_table` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +116,7 @@ CREATE TABLE `dynamic_table` (
   `postDate` datetime NOT NULL,
   `movieId` int(20) unsigned NOT NULL,
   PRIMARY KEY (`objectId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10015 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10005 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +125,7 @@ CREATE TABLE `dynamic_table` (
 
 LOCK TABLES `dynamic_table` WRITE;
 /*!40000 ALTER TABLE `dynamic_table` DISABLE KEYS */;
-INSERT INTO `dynamic_table` VALUES (10000,10000,'错过一时 错过一生','','','2019-03-30 22:37:27',10003),(10013,10000,'‘我们的爱 过了就不会回来‘’','','','2019-03-30 23:17:15',10003),(10014,10000,'Test ‘results’','','','2019-04-19 01:09:04',10003);
+INSERT INTO `dynamic_table` VALUES (10000,0,'','','','1970-01-01 00:00:00',0),(10001,10001,'你说什么都不愿意做什么事情更好’you w the’','','','2019-05-11 15:39:56',10002),(10002,10001,'Nice','','','2019-05-12 16:29:05',10002),(10003,10001,'期待','','','2019-05-12 20:09:44',10003),(10004,10001,'这么多年都没看到过这么的','','','2019-05-12 20:12:25',10001);
 /*!40000 ALTER TABLE `dynamic_table` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,7 +148,7 @@ CREATE TABLE `movie_table` (
   `genreids` varchar(255) DEFAULT '',
   `isEpisode` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`movieId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10005 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10004 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +157,7 @@ CREATE TABLE `movie_table` (
 
 LOCK TABLES `movie_table` WRITE;
 /*!40000 ALTER TABLE `movie_table` DISABLE KEYS */;
-INSERT INTO `movie_table` VALUES (10003,9762,'舞出我人生','Step Up','6.8','2106','2006-08-11','/7EfV3BxvtTibNhXNs2O3bvKNiFL.jpg','10402,18,10749,80',0),(10004,37661,'Icon','Icon','6.2','6','2005-01-01','/gHL1eEvri7bTq0lDh5Ggasl3MpX.jpg','10770,28,18,53',0);
+INSERT INTO `movie_table` VALUES (10000,0,'','','','','','','',0),(10001,603,'黑客帝国','The Matrix','8.1','14159','1999-03-30','/uSgDJaLSFh2oOUMRevaxJWwbh4b.jpg','28,878',0),(10002,605,'黑客帝国3：矩阵革命','The Matrix Revolutions','6.6','5035','2003-11-05','/8EZYW4pqCX7Nur38jsmDvcRt28a.jpg','12,28,53,878',0),(10003,383498,'死侍2','Deadpool 2','7.5','8464','2018-05-10','/3nCUY6Or2yXVnSfY5ctdMPoLa7B.jpg','28,35,12',0);
 /*!40000 ALTER TABLE `movie_table` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,7 +173,7 @@ CREATE TABLE `praise_comment` (
   `commentId` int(20) unsigned NOT NULL,
   `authorId` int(20) unsigned NOT NULL,
   PRIMARY KEY (`objectId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,6 +182,7 @@ CREATE TABLE `praise_comment` (
 
 LOCK TABLES `praise_comment` WRITE;
 /*!40000 ALTER TABLE `praise_comment` DISABLE KEYS */;
+INSERT INTO `praise_comment` VALUES (10000,0,0);
 /*!40000 ALTER TABLE `praise_comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,7 +198,7 @@ CREATE TABLE `praise_dynamic` (
   `dynamicId` int(20) unsigned NOT NULL,
   `authorId` int(20) unsigned NOT NULL,
   PRIMARY KEY (`objectId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10004 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,7 +207,7 @@ CREATE TABLE `praise_dynamic` (
 
 LOCK TABLES `praise_dynamic` WRITE;
 /*!40000 ALTER TABLE `praise_dynamic` DISABLE KEYS */;
-INSERT INTO `praise_dynamic` VALUES (10003,10000,10000);
+INSERT INTO `praise_dynamic` VALUES (10000,0,0);
 /*!40000 ALTER TABLE `praise_dynamic` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -221,7 +223,7 @@ CREATE TABLE `report_comment` (
   `commentId` int(20) unsigned NOT NULL,
   `authorId` int(20) unsigned NOT NULL,
   PRIMARY KEY (`objectId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -230,6 +232,7 @@ CREATE TABLE `report_comment` (
 
 LOCK TABLES `report_comment` WRITE;
 /*!40000 ALTER TABLE `report_comment` DISABLE KEYS */;
+INSERT INTO `report_comment` VALUES (10000,0,0);
 /*!40000 ALTER TABLE `report_comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -245,7 +248,7 @@ CREATE TABLE `report_dynamic` (
   `dynamicId` int(20) unsigned NOT NULL,
   `authorId` int(20) unsigned NOT NULL,
   PRIMARY KEY (`objectId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -254,6 +257,7 @@ CREATE TABLE `report_dynamic` (
 
 LOCK TABLES `report_dynamic` WRITE;
 /*!40000 ALTER TABLE `report_dynamic` DISABLE KEYS */;
+INSERT INTO `report_dynamic` VALUES (10000,0,0);
 /*!40000 ALTER TABLE `report_dynamic` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -269,7 +273,7 @@ CREATE TABLE `report_user` (
   `authorId` int(20) unsigned NOT NULL,
   `userId` int(20) unsigned NOT NULL,
   PRIMARY KEY (`objectId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -278,6 +282,7 @@ CREATE TABLE `report_user` (
 
 LOCK TABLES `report_user` WRITE;
 /*!40000 ALTER TABLE `report_user` DISABLE KEYS */;
+INSERT INTO `report_user` VALUES (10000,0,0);
 /*!40000 ALTER TABLE `report_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -293,7 +298,7 @@ CREATE TABLE `want_movie` (
   `movieId` int(20) unsigned NOT NULL,
   `userId` int(20) unsigned NOT NULL,
   PRIMARY KEY (`objectId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10004 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -302,6 +307,7 @@ CREATE TABLE `want_movie` (
 
 LOCK TABLES `want_movie` WRITE;
 /*!40000 ALTER TABLE `want_movie` DISABLE KEYS */;
+INSERT INTO `want_movie` VALUES (10000,0,0),(10001,10001,10001),(10003,10002,10001);
 /*!40000 ALTER TABLE `want_movie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -317,7 +323,7 @@ CREATE TABLE `watch_movie` (
   `movieId` int(20) unsigned NOT NULL,
   `userId` int(20) unsigned NOT NULL,
   PRIMARY KEY (`objectId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10002 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -326,7 +332,7 @@ CREATE TABLE `watch_movie` (
 
 LOCK TABLES `watch_movie` WRITE;
 /*!40000 ALTER TABLE `watch_movie` DISABLE KEYS */;
-INSERT INTO `watch_movie` VALUES (10000,10003,10000);
+INSERT INTO `watch_movie` VALUES (10000,0,0),(10001,10002,10001);
 /*!40000 ALTER TABLE `watch_movie` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -339,4 +345,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-10 14:10:32
+-- Dump completed on 2019-05-13 11:06:56
