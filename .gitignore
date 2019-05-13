@@ -39,7 +39,10 @@ playground.xcworkspace
 # Package.pins
 # Package.resolved
 .build/
-.DS_Store 
+
+.DS_Store
+.build/*
+**/.build/ 
 
 
 # CocoaPods
