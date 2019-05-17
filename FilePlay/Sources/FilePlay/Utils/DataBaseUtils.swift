@@ -9,7 +9,7 @@ import Foundation
 import PerfectMySQL
 
 private let dataBaseName = kProjectName
-private let host = "106.12.107.176"  //数据库IP
+private let host = "127.0.0.1"  //数据库IP
 private let port = "3306"   //数据库端口
 private let user = "root"   //数据库用户名
 private let password = "8707gtt04cjsd,./"   //数据库密码
@@ -77,6 +77,18 @@ class DataBaseConnent {
         }
         
         Utils.logError("连接Schema：", "\(name)成功")
+        
+        let timer = Timer.scheduledTimer(timeInterval: 60*10, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+        RunLoop.main.add(timer, forMode: RunLoop.Mode.default)
+    }
+    
+    @objc private func timerAction() -> Void {
+        let statement = "SELECT COUNT(DISTINCT \(accounttable).userId) FROM \(accounttable)"
+        if connect.query(statement: statement) == false {
+            Utils.logError("连接数据库", "失败：\(connect.errorMessage())")
+        } else {
+            Utils.logError("检测数据库成功！", "成功") 
+        }
     }
 }
 // MARK: - 操作数据库的基类
