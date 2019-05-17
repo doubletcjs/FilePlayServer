@@ -78,7 +78,7 @@ class DataBaseConnent {
         
         Utils.logError("连接Schema：", "\(name)成功")
         
-        let timer = Timer.scheduledTimer(timeInterval: 60*10, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+        let timer = Timer.scheduledTimer(timeInterval: 60*2, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
         RunLoop.main.add(timer, forMode: RunLoop.Mode.default)
     }
     
