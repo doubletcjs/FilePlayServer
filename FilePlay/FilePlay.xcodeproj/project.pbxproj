@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AE2805DD22840C9400D2F14F /* CommentOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2805DC22840C9400D2F14F /* CommentOperator.swift */; };
+		AE773A5D228FA34D00F37A11 /* Repeater.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE773A5C228FA34D00F37A11 /* Repeater.swift */; };
 		OBJ_1000 /* NetAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_141 /* NetAddress.swift */; };
 		OBJ_1001 /* NetEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_142 /* NetEvent.swift */; };
 		OBJ_1002 /* NetNamedPipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_143 /* NetNamedPipe.swift */; };
@@ -752,6 +753,7 @@
 
 /* Begin PBXFileReference section */
 		AE2805DC22840C9400D2F14F /* CommentOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentOperator.swift; sourceTree = "<group>"; };
+		AE773A5C228FA34D00F37A11 /* Repeater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repeater.swift; sourceTree = "<group>"; };
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"FilePlay::FilePlay::Product" /* FilePlay */ = {isa = PBXFileReference; lastKnownFileType = text; path = FilePlay; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* AccountOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountOperator.swift; sourceTree = "<group>"; };
@@ -1414,6 +1416,7 @@
 			children = (
 				OBJ_16 /* DataBaseUtils.swift */,
 				OBJ_17 /* Utils.swift */,
+				AE773A5C228FA34D00F37A11 /* Repeater.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1876,7 +1879,7 @@
 			path = Coding;
 			sourceTree = "<group>";
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -1885,7 +1888,6 @@
 				OBJ_20 /* Dependencies */,
 				OBJ_415 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_53 /* Expression */ = {
@@ -2480,7 +2482,7 @@
 				English,
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_415 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -2798,6 +2800,7 @@
 				OBJ_681 /* AccountOperator.swift in Sources */,
 				OBJ_682 /* ApiOperator.swift in Sources */,
 				AE2805DD22840C9400D2F14F /* CommentOperator.swift in Sources */,
+				AE773A5D228FA34D00F37A11 /* Repeater.swift in Sources */,
 				OBJ_683 /* DynamicOperator.swift in Sources */,
 				OBJ_684 /* MovieOperator.swift in Sources */,
 				OBJ_685 /* ReportOperator.swift in Sources */,

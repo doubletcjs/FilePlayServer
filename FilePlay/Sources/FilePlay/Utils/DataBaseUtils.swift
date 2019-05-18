@@ -6,8 +6,7 @@
 //
 
 import Foundation
-import PerfectMySQL
-import PerfectRepeater
+import PerfectMySQL 
 
 private let dataBaseName = kProjectName
 private let host = "127.0.0.1"  //数据库IP
@@ -83,28 +82,17 @@ class DataBaseConnent {
             print("检测数据库")
             
             let statement = "SELECT COUNT(DISTINCT \(accounttable).userId) FROM \(accounttable)"
-            if connect.query(statement: statement) == false {
-                Utils.logError("检测数据库", "失败：\(connect.errorMessage())")
+            if self.connect.query(statement: statement) == false {
+                Utils.logError("检测数据库", "失败：\(self.connect.errorMessage())")
             } else {
-                Utils.logError("检测数据库", "成功")
+                Utils.logError("每10秒检测数据库", "成功")
             }
             
             return true
         }
         
-        Repeater.exec(timer: 60*2, callback: checkDatabase)
-//        let timer = Timer.scheduledTimer(timeInterval: 60*2, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
-//        RunLoop.main.add(timer, forMode: RunLoop.Mode.default)
+        Repeater.exec(timer: 10, callback: checkDatabase)
     }
-    
-//    private func timerAction() -> Void {
-//        let statement = "SELECT COUNT(DISTINCT \(accounttable).userId) FROM \(accounttable)"
-//        if connect.query(statement: statement) == false {
-//            Utils.logError("连接数据库", "失败：\(connect.errorMessage())")
-//        } else {
-//            Utils.logError("检测数据库成功！", "成功")
-//        }
-//    }
 }
 // MARK: - 操作数据库的基类
 class DataBaseOperator {
