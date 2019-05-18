@@ -78,20 +78,20 @@ class DataBaseConnent {
         
         Utils.logError("连接Schema：", "\(name)成功")
         
-        let checkDatabase = { () -> Bool in
+        let checkDatabase = { [weak self] () -> Bool in
             print("检测数据库")
             
             let statement = "SELECT COUNT(DISTINCT \(accounttable).userId) FROM \(accounttable)"
-            if self.connect.query(statement: statement) == false {
+            if self?.connect.query(statement: statement) == false {
                 Utils.logError("检测数据库", "失败：\(self.connect.errorMessage())")
             } else {
-                Utils.logError("每10秒检测数据库", "成功")
+                Utils.logError("每100秒检测数据库", "成功")
             }
             
             return true
         }
         
-        Repeater.exec(timer: 10, callback: checkDatabase)
+        Repeater.exec(timer: 100, callback: checkDatabase)
     }
 }
 // MARK: - 操作数据库的基类
