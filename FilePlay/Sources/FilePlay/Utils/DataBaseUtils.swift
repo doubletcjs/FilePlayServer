@@ -82,7 +82,7 @@ class DataBaseConnent {
             print("检测数据库")
             
             let statement = "SELECT COUNT(DISTINCT \(accounttable).userId) FROM \(accounttable)"
-            if self!.connect.query(statement: statement) == false {
+            if DataBaseConnent.instance.query(statement: statement) == false {
                 Utils.logError("检测数据库", "失败：\(self.connect.errorMessage())")
             } else {
                 Utils.logError("每100秒检测数据库", "成功")
