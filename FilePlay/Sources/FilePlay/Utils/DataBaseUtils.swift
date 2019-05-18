@@ -78,12 +78,12 @@ class DataBaseConnent {
         
         Utils.logError("连接Schema：", "\(name)成功")
         
-        let checkDatabase = { [weak self] () -> Bool in
+        let checkDatabase = { () -> Bool in
             print("检测数据库")
             
             let statement = "SELECT COUNT(DISTINCT \(accounttable).userId) FROM \(accounttable)"
             if DataBaseConnent.instance.query(statement: statement) == false {
-                Utils.logError("检测数据库", "失败：\(self.connect.errorMessage())")
+                Utils.logError("检测数据库", "失败：\(DataBaseConnent.instance.errorMessage())")
             } else {
                 Utils.logError("每100秒检测数据库", "成功")
             }
