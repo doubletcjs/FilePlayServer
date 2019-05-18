@@ -54,7 +54,6 @@ class DataBaseConnent {
     private func connectDataBase() {
         if connect == nil {
             connect = MySQL()
-            connect.setOption(MySQLOpt.MYSQL_OPT_RECONNECT, true)
         }
         
         let connected = connect.connect(host: "\(host)", user: user, password: password)
@@ -65,6 +64,7 @@ class DataBaseConnent {
         }
         
         Utils.logError("连接数据库", "成功")
+        connect.setOption(MySQLOpt.MYSQL_OPT_RECONNECT, true)
     }
     
     // MARK: - 选择数据库Scheme
@@ -77,7 +77,7 @@ class DataBaseConnent {
             return
         }
         
-        Utils.logError("连接Schema：", "\(name)成功") 
+        Utils.logError("连接Schema：\(name)", "成功")
     }
 }
 // MARK: - 操作数据库的基类
