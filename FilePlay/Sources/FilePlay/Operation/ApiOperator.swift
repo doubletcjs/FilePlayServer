@@ -78,6 +78,8 @@ class BasicRoutes {
             // 动态评论列表
             baseRoutes.add(method: .post, uri: "/dynamicCommentList", handler: dynamicCommentListHandle)
             
+            //AccountOperator().checkAccountTableStatus()
+            
             return baseRoutes
         }
     }

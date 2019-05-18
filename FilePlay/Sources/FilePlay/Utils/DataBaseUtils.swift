@@ -54,6 +54,7 @@ class DataBaseConnent {
     private func connectDataBase() {
         if connect == nil {
             connect = MySQL()
+            connect.setOption(MySQLOpt.MYSQL_OPT_RECONNECT, true)
         }
         
         let connected = connect.connect(host: "\(host)", user: user, password: password)
@@ -76,22 +77,7 @@ class DataBaseConnent {
             return
         }
         
-        Utils.logError("连接Schema：", "\(name)成功")
-        
-        let checkDatabase = { () -> Bool in
-            print("检测数据库")
-            
-            let statement = "SELECT COUNT(DISTINCT \(accounttable).userId) FROM \(accounttable)"
-            if DataBaseConnent.instance.query(statement: statement) == false {
-                Utils.logError("检测数据库", "失败：\(DataBaseConnent.instance.errorMessage())")
-            } else {
-                Utils.logError("每100秒检测数据库", "成功")
-            }
-            
-            return true
-        }
-        
-        Repeater.exec(timer: 100, callback: checkDatabase)
+        Utils.logError("连接Schema：", "\(name)成功") 
     }
 }
 // MARK: - 操作数据库的基类

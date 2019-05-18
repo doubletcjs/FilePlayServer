@@ -529,4 +529,21 @@ class AccountOperator: DataBaseOperator {
         
         return responseJson
     }
+    
+    func checkAccountTableStatus() -> Void {
+        let second: Double = 60.0*10
+        
+        let checkDatabase = { () -> Bool in
+            let isConnect = self.mysql.ping()
+            if isConnect == false {
+                print("数据库ping不通")
+            } else {
+                print("检测数据库在线")
+            }
+            
+            return true
+        }
+        
+        Repeater.exec(timer: second, callback: checkDatabase)
+    }
 }
