@@ -36,8 +36,6 @@ server.setResponseFilters([
 do {
     LogFile.info("Server Start Successful")
     try server.start()
-    
-    mys
 } catch let error {
     LogFile.error("Failure Start Server：\(error)")
 }
