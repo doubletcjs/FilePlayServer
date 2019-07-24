@@ -1,114 +1,127 @@
-#用户表
-
-CREATE TABLE `account_table` (
-`userId` int(20) unsigned NOT NULL AUTO_INCREMENT,
-`nickname` varchar(50) NOT NULL DEFAULT '',
-`portrait` varchar(255) DEFAULT '',
-`gender` int(5) NOT NULL DEFAULT '0', 
-`mobile` varchar(30) NOT NULL DEFAULT '',
-`date` datetime NOT NULL,  
-`introduce` varchar(512) NOT NULL DEFAULT '',
-`password` varchar(256) CHARACTER SET latin1 NOT NULL DEFAULT '',
-PRIMARY KEY (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
-
-#举报用户表
-
-CREATE TABLE `report_user` (
-`objectId` int(20) unsigned NOT NULL AUTO_INCREMENT,
-`authorId` int(20) unsigned NOT NULL,
-`userId` int(20) unsigned NOT NULL,
-PRIMARY KEY (`objectId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
-
-#关注、粉丝表
-# A 关注 B --- authorId==A && userId==B >> count!=0
-# A 的粉丝列表 where userId==A
-# A 的关注列表 where authorId==A
-
-CREATE TABLE `attention_fan` (
-`objectId` int(20) unsigned NOT NULL AUTO_INCREMENT,
-`authorId` int(20) unsigned NOT NULL,
-`userId` int(20) unsigned NOT NULL,
-PRIMARY KEY (`objectId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
-
-#动态表
-
-CREATE TABLE `dynamic_table` (
-`objectId` int(20) unsigned NOT NULL AUTO_INCREMENT,
-`authorId` int(20) unsigned NOT NULL,
-`content` mediumtext NOT NULL,
-`image` varchar(255) DEFAULT '',
-`imageWH` varchar(255) DEFAULT '',
-`postDate` datetime NOT NULL,
-`movieId` int(20) unsigned NOT NULL,
-`isEpisode` tinyint(1) NOT NULL DEFAULT '0',
-PRIMARY KEY (`objectId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
-
-#动态评论表
+#评论
 
 CREATE TABLE `comment_table` (
-`objectId` int(20) unsigned NOT NULL AUTO_INCREMENT,
-`authorId` int(20) unsigned NOT NULL,
-`content` mediumtext NOT NULL, 
-`postDate` datetime NOT NULL,
-`replyId` int(20) unsigned NOT NULL,
-`dynamicId` int(20) unsigned NOT NULL,
-PRIMARY KEY (`objectId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
+ `commentId` int(20) unsigned NOT NULL AUTO_INCREMENT,
+ `content` mediumtext NOT NULL,
+ `createDate` datetime NOT NULL,
+ `dynamicId` int(20) unsigned NOT NULL,
+ `autherId` int(20) unsigned NOT NULL,
+ `toAutherId` int(20) unsigned NOT NULL,
+ `toAutherName` varchar(50) NOT NULL DEFAULT '',
+ PRIMARY KEY (`commentId`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
-#举报动态表
+CREATE TABLE `praise_comment` (
+ `objectId` int(20) unsigned NOT NULL AUTO_INCREMENT,
+ `commentId` int(20) unsigned NOT NULL,
+ `authorId` int(20) unsigned NOT NULL,
+ PRIMARY KEY (`objectId`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `report_dynamic` (
-`objectId` int(20) unsigned NOT NULL AUTO_INCREMENT,
-`dynamicId` int(20) unsigned NOT NULL,
-`authorId` int(20) unsigned NOT NULL,
-PRIMARY KEY (`objectId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
+CREATE TABLE `report_comment` (
+ `objectId` int(20) unsigned NOT NULL AUTO_INCREMENT,
+ `authorId` int(20) unsigned NOT NULL,
+ `targetId` int(20) unsigned NOT NULL,
+ `content` varchar(255) DEFAULT '',
+ PRIMARY KEY (`objectId`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
-#点赞动态表
+#话题
+
+CREATE TABLE `topic_table` (
+ `topicId` int(20) unsigned NOT NULL AUTO_INCREMENT,
+ `name` varchar(50) NOT NULL DEFAULT '',
+ `createDate` datetime NOT NULL,
+ PRIMARY KEY (`topicId`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
+
+#动态
+
+CREATE TABLE `dynamic_table` (
+ `dynamicId` int(20) unsigned NOT NULL AUTO_INCREMENT,
+ `content` mediumtext NOT NULL,
+ `postDate` datetime NOT NULL,
+ `imageUrls` varchar(255) DEFAULT '',
+ `imageWH` varchar(255) DEFAULT '',
+ `authorId` int(20) unsigned NOT NULL,
+ `movieId` int(20) unsigned NOT NULL,
+ `topicId` int(20) unsigned NOT NULL,
+ PRIMARY KEY (`dynamicId`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `praise_dynamic` (
-`objectId` int(20) unsigned NOT NULL AUTO_INCREMENT,
-`dynamicId` int(20) unsigned NOT NULL,
-`authorId` int(20) unsigned NOT NULL,
-PRIMARY KEY (`objectId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
+ `objectId` int(20) unsigned NOT NULL AUTO_INCREMENT,
+ `dynamicId` int(20) unsigned NOT NULL,
+ `authorId` int(20) unsigned NOT NULL,
+ PRIMARY KEY (`objectId`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
-#TMDB电影表
+CREATE TABLE `report_dynamic` (
+ `objectId` int(20) unsigned NOT NULL AUTO_INCREMENT,
+ `authorId` int(20) unsigned NOT NULL,
+ `targetId` int(20) unsigned NOT NULL,
+ `content` varchar(255) DEFAULT '',
+ PRIMARY KEY (`objectId`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
+
+#用户
+
+CREATE TABLE `account_table` (
+ `userId` int(20) unsigned NOT NULL AUTO_INCREMENT,
+ `nickname` varchar(50) NOT NULL DEFAULT '',
+ `portrait` varchar(255) DEFAULT '',
+ `gender` int(5) NOT NULL DEFAULT '0',
+ `mobile` varchar(30) NOT NULL DEFAULT '',
+ `date` datetime NOT NULL,
+ `introduce` varchar(512) NOT NULL DEFAULT '',
+ `password` varchar(100) NOT NULL DEFAULT '',
+ PRIMARY KEY (`userId`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
+
+#关注、粉丝表
+ # A 关注 B --- authorId==A && userId==B >> count!=0
+ # A 的粉丝列表 where userId==A
+ # A 的关注列表 where authorId==A
+ 
+CREATE TABLE `attention_fan` (
+ `objectId` int(20) unsigned NOT NULL AUTO_INCREMENT,
+ `authorId` int(20) unsigned NOT NULL,
+ `userId` int(20) unsigned NOT NULL,
+ PRIMARY KEY (`objectId`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `report_account` (
+ `objectId` int(20) unsigned NOT NULL AUTO_INCREMENT,
+ `authorId` int(20) unsigned NOT NULL,
+ `targetId` int(20) unsigned NOT NULL,
+ `content` varchar(255) DEFAULT '',
+ PRIMARY KEY (`objectId`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
+
+#电影
 
 CREATE TABLE `movie_table` (
-`itemId` int(20) unsigned NOT NULL AUTO_INCREMENT,
-`objectId` int(20) unsigned NOT NULL,
-`title` varchar(255) DEFAULT '',
-`original_title` varchar(255) DEFAULT '',
-`vote_average` varchar(255) DEFAULT '',
-`vote_count` varchar(255) DEFAULT '',
-`release_date` varchar(255) DEFAULT '',
-`poster_path` varchar(255) DEFAULT '', 
-`genreids` varchar(255) DEFAULT '', 
-`isEpisode` tinyint(1) NOT NULL DEFAULT '0',
-PRIMARY KEY (`itemId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
-
-#用户想看电影表
+ `movieId` int(20) unsigned NOT NULL AUTO_INCREMENT,
+ `movieName` varchar(128) DEFAULT '',
+ `movieOriginalName` varchar(128) DEFAULT '',
+ `movieGenres` varchar(128) DEFAULT '',
+ `movieVoteAverage` varchar(128) DEFAULT '',
+ `movieVoteCount` varchar(128) DEFAULT '',
+ `movieReleaseDate` varchar(128) DEFAULT '',
+ `moviePoster` varchar(255) DEFAULT '',
+ PRIMARY KEY (`movieId`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `watch_movie` (
-`objectId` int(20) unsigned NOT NULL AUTO_INCREMENT,
-`movieId` int(20) unsigned NOT NULL,
-`userId` int(20) unsigned NOT NULL,
-`isEpisode` tinyint(1) NOT NULL DEFAULT '0',
-PRIMARY KEY (`objectId`)
+  `objectId` int(20) unsigned NOT NULL AUTO_INCREMENT,
+  `movieId` int(20) unsigned NOT NULL,
+  `userId` int(20) unsigned NOT NULL,
+  PRIMARY KEY (`objectId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
-#用户看过电影表
-
-CREATE TABLE `want_movie` (
-`objectId` int(20) unsigned NOT NULL AUTO_INCREMENT,
-`movieId` int(20) unsigned NOT NULL,
-`userId` int(20) unsigned NOT NULL,
-`isEpisode` tinyint(1) NOT NULL DEFAULT '0',
-PRIMARY KEY (`objectId`)
+CREATE TABLE `collection_movie` (
+  `objectId` int(20) unsigned NOT NULL AUTO_INCREMENT,
+  `movieId` int(20) unsigned NOT NULL,
+  `userId` int(20) unsigned NOT NULL,
+  PRIMARY KEY (`objectId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;

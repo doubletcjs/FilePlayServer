@@ -35,50 +35,13 @@ class BasicRoutes {
             // 注册
             baseRoutes.add(method: .post, uri: "/register", handler: registerHandle)
             // 手机号密码登录
-            baseRoutes.add(method: .post, uri: "/login", handler: passwordLoginHandle)
+            baseRoutes.add(method: .post, uri: "/login", handler: loginHandle)
             // 修改密码
             baseRoutes.add(method: .post, uri: "/resetPasswd", handler: resetPasswordHandle)
             // 用户信息
             baseRoutes.add(method: .post, uri: "/accountInfo", handler: accountInfoHandle)
             // 更新用户信息
             baseRoutes.add(method: .post, uri: "/updateAccount", handler: updateAccountHandle)
-            
-            // 粉丝
-            baseRoutes.add(method: .post, uri: "/accountFanList", handler: accountFanListHandle)
-            // 关注
-            baseRoutes.add(method: .post, uri: "/accountAttentionList", handler: accountAttentionListHandle)
-            // 关注用户
-            baseRoutes.add(method: .post, uri: "/accountAttention", handler: accountAttentionHandle)
-            
-            // 插入、更新电影详情
-            baseRoutes.add(method: .post, uri: "/movieHandle", handler: movieHandle)
-            // 电影详情
-            baseRoutes.add(method: .post, uri: "/movieDetail", handler: movieDetailHandle)
-            // 想看
-            baseRoutes.add(method: .post, uri: "/movieWant", handler: movieWantHandle)
-            // 想看、看过列表
-            baseRoutes.add(method: .post, uri: "/movieWantWatchList", handler: movieWantWatchListHandle)
-            // 看过
-            baseRoutes.add(method: .post, uri: "/movieWatch", handler: movieWatchHandle)
-            
-            // 发动态
-            baseRoutes.add(method: .post, uri: "/postDynamic", handler: postDynamicHandle)
-            // 动态列表
-            baseRoutes.add(method: .post, uri: "/dynamicList", handler: dynamicListHandle)
-            // 动态点赞
-            baseRoutes.add(method: .post, uri: "/dynamiPraise", handler: dynamiPraiseHandle)
-            // 用户动态列表
-            baseRoutes.add(method: .post, uri: "/accountDynamicList", handler: accountDynamicListHandle)
-            
-            // 举报
-            baseRoutes.add(method: .post, uri: "/reportFunction", handler: reportFunctionHandle)
-            
-            // 发评论
-            baseRoutes.add(method: .post, uri: "/postComment", handler: postCommentHandle)
-            // 动态评论列表
-            baseRoutes.add(method: .post, uri: "/dynamicCommentList", handler: dynamicCommentListHandle)
-            
-            //AccountOperator().checkAccountTableStatus()
             
             return baseRoutes
         }
@@ -186,349 +149,21 @@ class BasicRoutes {
             response.completed()
         }
     }
-    // MARK: - 举报
-    private func reportFunctionHandle(request: HTTPRequest, response: HTTPResponse) {
-        var type: String = ""
-        
-        if request.param(name: "type") != nil {
-            type = request.param(name: "type")!
-        }
-        
-        guard type.count != 0 else {
-            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-            response.completed()
-            
-            return
-        }
-        
-        var authorId: String = ""
-        if request.param(name: "authorId") != nil {
-            authorId = request.param(name: "authorId")!
-        }
-        
-        guard authorId.count != 0 else {
-            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-            response.completed()
-            
-            return
-        }
-        
-        var requestJson = ""
-        if type == "0" {
-            var userId: String = ""
-            if request.param(name: "userId") != nil {
-                userId = request.param(name: "userId")!
-            }
-            
-            guard userId.count != 0 else {
-                response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-                response.completed()
-                
-                return
-            }
-            
-            requestJson = ReportOperator().reportAccount(authorId, userId)
-        } else if type == "1" {
-            var dynamicId: String = ""
-            if request.param(name: "dynamicId") != nil {
-                dynamicId = request.param(name: "dynamicId")!
-            }
-            
-            guard dynamicId.count != 0 else {
-                response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-                response.completed()
-                
-                return
-            }
-            
-            requestJson = ReportOperator().reportDynamic(authorId, dynamicId)
-        } else if type == "2" {
-            var commentId: String = ""
-            if request.param(name: "commentId") != nil {
-                commentId = request.param(name: "commentId")!
-            }
-            
-            guard commentId.count != 0 else {
-                response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-                response.completed()
-                
-                return
-            }
-            
-            requestJson = ReportOperator().reportComment(authorId, commentId)
-        }
-        
-        guard requestJson.count != 0 else {
-            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-            response.completed()
-            
-            return
-        }
-        
-        response.appendBody(string: requestJson)
-        response.completed()
-    }
-    // MARK: - 动态点赞
-    private func dynamiPraiseHandle(request: HTTPRequest, response: HTTPResponse) {
-        var dynamicId: String = ""
-        var authorId: String = ""
-        
-        if request.param(name: "dynamicId") != nil {
-            dynamicId = request.param(name: "dynamicId")!
-        }
-        
-        if request.param(name: "authorId") != nil {
-            authorId = request.param(name: "authorId")!
-        }
-        
-        guard dynamicId.count != 0 && authorId.count != 0 else {
-            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-            response.completed()
-            
-            return
-        }
-        
-        let requestJson = DynamicOperator().dynamiPraiseHandle(dynamicId: dynamicId, authorId: authorId)
-        response.appendBody(string: requestJson)
-        response.completed()
-    }
-    // MARK: - 用户动态列表
-    private func accountDynamicListHandle(request: HTTPRequest, response: HTTPResponse) {
-        let params = request.params()
-        var dict: [String: Any] = [:]
-        
-        if params.count > 0 {
-            for idx in 0...params.count-1 {
-                let param: (String, String) = params[idx]
-                dict[param.0] = param.1
-            }
-        }
-        
-        guard dict.keys.count == 4 else {
-            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-            response.completed()
-            
-            return
-        }
-        
-        let requestJson = DynamicOperator().accountDynamicList(params: dict)
-        response.appendBody(string: requestJson)
-        response.completed()
-    }
-    // MARK: - 动态列表
-    private func dynamicListHandle(request: HTTPRequest, response: HTTPResponse) {
-        let params = request.params()
-        var dict: [String: Any] = [:]
-        
-        if params.count > 0 {
-            for idx in 0...params.count-1 {
-                let param: (String, String) = params[idx]
-                dict[param.0] = param.1
-            }
-        }
-        
-        guard dict.keys.count == 4 else {
-            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-            response.completed()
-            
-            return
-        }
-        
-        let requestJson = DynamicOperator().dynamicList(params: dict)
-        response.appendBody(string: requestJson)
-        response.completed()
-    }
-    // MARK: - 动态评论列表
-    private func dynamicCommentListHandle(request: HTTPRequest, response: HTTPResponse) {
-        let params = request.params()
-        var dict: [String: Any] = [:]
-        
-        if params.count > 0 {
-            for idx in 0...params.count-1 {
-                let param: (String, String) = params[idx]
-                dict[param.0] = param.1
-            }
-        }
-        
-        guard dict.keys.count == 4 else {
-            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-            response.completed()
-            
-            return
-        }
-        
-        let requestJson = CommentOperator().dynamicCommentList(params: dict)
-        response.appendBody(string: requestJson)
-        response.completed()
-    }
-    // MARK: - 发评论
-    private func postCommentHandle(request: HTTPRequest, response: HTTPResponse) {
-        let params = request.params()
-        var dict: [String: Any] = [:]
-        
-        if params.count > 0 {
-            for idx in 0...params.count-1 {
-                let param: (String, String) = params[idx]
-                dict[param.0] = param.1
-            }
-        }
-        
-        guard dict.keys.count >= 4 else {
-            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-            response.completed()
-            
-            return
-        }
-        
-        let requestJson = CommentOperator().postCommentHandle(params: dict)
-        response.appendBody(string: requestJson)
-        response.completed()
-    }
-    // MARK: - 发动态
-    private func postDynamicHandle(request: HTTPRequest, response: HTTPResponse) {
-        let params = request.params()
-        var dict: [String: Any] = [:]
-        
-        if params.count > 0 {
-            for idx in 0...params.count-1 {
-                let param: (String, String) = params[idx]
-                dict[param.0] = param.1
-            }
-        }
-        
-        guard dict.keys.count >= 3 else {
-            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-            response.completed()
-            
-            return
-        }
-        
-        let requestJson = DynamicOperator().postDynamicHandle(params: dict)
-        response.appendBody(string: requestJson)
-        response.completed()
-    }
-    // MARK: - 插入、更新电影详情
-    private func movieHandle(request: HTTPRequest, response: HTTPResponse) {
-        let params = request.params()
-        var dict: [String: Any] = [:]
-        
-        if params.count > 0 {
-            for idx in 0...params.count-1 {
-                let param: (String, String) = params[idx]
-                dict[param.0] = param.1
-            }
-        }
-        
-        guard dict.keys.count > 1 || dict["userId"] != nil else {
-            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-            response.completed()
-            
-            return
-        }
-        
-        let requestJson = MovieOperator().movieDetailHandle(params: dict)
-        response.appendBody(string: requestJson)
-        response.completed()
-    }
-    // MARK: - 电影详情
-    private func movieDetailHandle(request: HTTPRequest, response: HTTPResponse) {
-        var loginId: String = ""
-        var movieId: String = ""
-        
-        if request.param(name: "loginId") != nil {
-            loginId = request.param(name: "loginId")!
-        }
-        
-        if request.param(name: "movieId") != nil {
-            movieId = request.param(name: "movieId")!
-        }
-        
-        guard movieId.count > 0 else {
-            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-            response.completed()
-            
-            return
-        }
-        
-        let requestJson = MovieOperator().getMovieDetail(loginId: loginId, movieId: movieId)
-        response.appendBody(string: requestJson)
-        response.completed()
-    }
-    // MARK: - 想看电影
-    private func movieWantHandle(request: HTTPRequest, response: HTTPResponse) {
-        var loginId: String = ""
-        var movieId: String = ""
-        
-        if request.param(name: "loginId") != nil {
-            loginId = request.param(name: "loginId")!
-        }
-        
-        if request.param(name: "movieId") != nil {
-            movieId = request.param(name: "movieId")!
-        }
-        
-        guard movieId.count > 0 else {
-            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-            response.completed()
-            
-            return
-        }
-        
-        let requestJson = MovieOperator().wantMovie(movieId: movieId, loginId: loginId)
-        response.appendBody(string: requestJson)
-        response.completed()
-    }
-    // MARK: - 想看、看过列表
-    private func movieWantWatchListHandle(request: HTTPRequest, response: HTTPResponse) {
-        let params = request.params()
-        var dict: [String: Any] = [:]
-        
-        if params.count > 0 {
-            for idx in 0...params.count-1 {
-                let param: (String, String) = params[idx]
-                dict[param.0] = param.1
-            }
-        }
-        
-        guard dict.keys.count == 5 else {
-            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-            response.completed()
-            
-            return
-        }
-        
-        let requestJson = MovieOperator().wantWatchMovieList(params: dict)
-        response.appendBody(string: requestJson)
-        response.completed()
-    }
-    // MARK: - 看过电影
-    private func movieWatchHandle(request: HTTPRequest, response: HTTPResponse) {
-        var loginId: String = ""
-        var movieId: String = ""
-        
-        if request.param(name: "loginId") != nil {
-            loginId = request.param(name: "loginId")!
-        }
-        
-        if request.param(name: "movieId") != nil {
-            movieId = request.param(name: "movieId")!
-        } 
-        
-        guard movieId.count > 0 else {
-            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-            response.completed()
-            
-            return
-        }
-        
-        let requestJson = MovieOperator().watchMovie(movieId: movieId, loginId: loginId)
-        response.appendBody(string: requestJson)
-        response.completed()
-    }
     // MARK: - 注册
+    /**
+     * params [String: Any]
+     * 1. nickname 昵称
+     * 2. mobile 注册手机
+     * 3. password 密码
+     */
     private func registerHandle(request: HTTPRequest, response: HTTPResponse) {
         var mobile: String = ""
         var password: String = ""
+        var nickname: String = ""
+        
+        if request.param(name: "nickname") != nil {
+            nickname = request.param(name: "nickname")!
+        }
         
         if request.param(name: "mobile") != nil {
             mobile = request.param(name: "mobile")!
@@ -538,28 +173,30 @@ class BasicRoutes {
             password = request.param(name: "password")!
         }
         
-        guard mobile.count > 0 && password.count > 0 else {
+        guard nickname.count > 0 && mobile.count > 0 && password.count > 0 else {
             response.setBody(string: Utils.failureResponseJson("请求参数错误"))
             response.completed()
             
             return
         }
         
-        let requestJson = AccountOperator().registerAccount(mobile: mobile, password: password)
+        let requestJson = ""
         
         response.appendBody(string: requestJson)
         response.completed()
     }
-    // MARK: - 更新用户信息
+    // MARK: - 修改用户信息
+    /**
+     * params [String: Any]
+     * 1. userId 必填
+     */
     private func updateAccountHandle(request: HTTPRequest, response: HTTPResponse) {
         let params = request.params()
         var dict: [String: Any] = [:]
         
-        if params.count > 0 {
-            for idx in 0...params.count-1 {
-                let param: (String, String) = params[idx]
-                dict[param.0] = param.1
-            }
+        for idx in 0..<params.count {
+            let param: (String, String) = params[idx]
+            dict[param.0] = param.1
         }
         
         guard dict.keys.count > 1 || dict["userId"] != nil else {
@@ -569,11 +206,17 @@ class BasicRoutes {
             return
         }
         
-        let requestJson = AccountOperator().updateAccount(params: dict)
+        let requestJson = ""
+        
         response.appendBody(string: requestJson)
         response.completed()
     }
     // MARK: - 修改密码
+    /**
+     * params [String: Any]
+     * 1. mobile 注册手机
+     * 2. password 新密码
+     */
     private func resetPasswordHandle(request: HTTPRequest, response: HTTPResponse) {
         var mobile: String = ""
         var password: String = ""
@@ -593,21 +236,25 @@ class BasicRoutes {
             return
         }
         
-        let requestJson = AccountOperator().resetPassword(mobile: mobile, password: password)
+        let requestJson = ""
         
         response.appendBody(string: requestJson)
         response.completed()
     }
-    // MARK: - 手机号密码登录
-    private func passwordLoginHandle(request: HTTPRequest, response: HTTPResponse) {
+    // MARK: - 登录
+    /**
+     * params [String: Any]
+     * 1. mobile 注册手机 (二选一)
+     * 2. nickname 昵称 (二选一)
+     * 3. password 新密码
+     */
+    private func loginHandle(request: HTTPRequest, response: HTTPResponse) {
         let params = request.params()
         var dict: [String: Any] = [:]
         
-        if params.count > 0 {
-            for idx in 0...params.count-1 {
-                let param: (String, String) = params[idx]
-                dict[param.0] = param.1
-            }
+        for idx in 0..<params.count {
+            let param: (String, String) = params[idx]
+            dict[param.0] = param.1
         }
         
         guard dict.keys.count == 2 else {
@@ -617,12 +264,17 @@ class BasicRoutes {
             return
         }
         
-        let requestJson = AccountOperator().passwordLogin(params: dict)
+        let requestJson = ""
         
         response.appendBody(string: requestJson)
         response.completed()
     }
-    // MARK: - 账号信息
+    // MARK: - 获取用户信息
+    /**
+     * params [String: Any]
+     * 1. userId 用户id 或 用户手机
+     * 2. loginId 登录用户id
+     */
     private func accountInfoHandle(request: HTTPRequest, response: HTTPResponse) {
         var userId: String = ""
         var loginId: String = ""
@@ -642,77 +294,8 @@ class BasicRoutes {
             return
         }
         
-        let requestJson = AccountOperator().getAccount(userId: userId, mobile: "", loginId: loginId)
+        let requestJson = ""
         
-        response.appendBody(string: requestJson)
-        response.completed()
-    }
-    // MARK: - 用户粉丝列表
-    private func accountFanListHandle(request: HTTPRequest, response: HTTPResponse) {
-        let params = request.params()
-        var dict: [String: Any] = [:]
-        
-        if params.count > 0 {
-            for idx in 0...params.count-1 {
-                let param: (String, String) = params[idx]
-                dict[param.0] = param.1
-            }
-        }
-        
-        guard dict.keys.count == 4 else {
-            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-            response.completed()
-            
-            return
-        }
-        
-        let requestJson = AccountOperator().userFanListQuery(params: dict)
-        response.appendBody(string: requestJson)
-        response.completed()
-    }
-    // MARK: - 用户关注列表
-    private func accountAttentionListHandle(request: HTTPRequest, response: HTTPResponse) {
-        let params = request.params()
-        var dict: [String: Any] = [:]
-        
-        if params.count > 0 {
-            for idx in 0...params.count-1 {
-                let param: (String, String) = params[idx]
-                dict[param.0] = param.1
-            }
-        }
-        
-        guard dict.keys.count == 4 else {
-            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-            response.completed()
-            
-            return
-        }
-        
-        let requestJson = AccountOperator().userAttentionListQuery(params: dict)
-        response.appendBody(string: requestJson)
-        response.completed()
-    }
-    // MARK: - 关注用户
-    private func accountAttentionHandle(request: HTTPRequest, response: HTTPResponse) {
-        let params = request.params()
-        var dict: [String: Any] = [:]
-        
-        if params.count > 0 {
-            for idx in 0...params.count-1 {
-                let param: (String, String) = params[idx]
-                dict[param.0] = param.1
-            }
-        }
-        
-        guard dict.keys.count == 2 else {
-            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
-            response.completed()
-            
-            return
-        }
-        
-        let requestJson = AccountOperator().accountAttention(params: dict)
         response.appendBody(string: requestJson)
         response.completed()
     }

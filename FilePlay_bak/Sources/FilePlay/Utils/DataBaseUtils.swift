@@ -11,31 +11,25 @@ import PerfectMySQL
 private let dataBaseName = kProjectName
 private let host = "127.0.0.1"  //数据库IP
 private let port = "3306"   //数据库端口
-private let user = "doubletcjs"   //数据库用户名
+private let user = "root"   //数据库用户名
 private let password = "8707gtt04cjsd,./"   //数据库密码
 
-// MARK: - 评论
-public let db_commentt = "comment_table"
-public let db_praise_comment = "praise_comment"
-public let db_report_comment = "report_comment"
+public let accounttable = "account_table"
+public let reportusertable = "report_user"
+public let attentionfantable = "attention_fan"
 
-// MARK: - 话题
-public let db_topic = "topic_table"
+public let movietable = "movie_table"
 
-// MARK: - 动态
-public let db_dynamic = "dynamic_table"
-public let db_praise_dynamic = "praise_dynamic"
-public let db_report_dynamic = "report_dynamic"
+public let watchmovietable = "watch_movie"
+public let wantmovietable = "want_movie"
 
-// MARK: - 用户
-public let db_account = "account_table"
-public let db_attention_fan = "attention_fan"
-public let db_report_account = "report_account"
+public let dynamictable = "dynamic_table"
+public let reportdynamictable = "report_dynamic"
+public let praisedynamictable  = "praise_dynamic"
 
-// MARK: - 电影
-public let db_movie = "movie_table"
-public let db_watch_movie = "watch_movie"
-public let db_collection_movie = "collection_movie"
+public let commenttable = "comment_table"
+public let reportcommenttable = "report_comment"
+public let praisecommenttable  = "praise_comment"
 
 // MARK: - 连接MySql数据库的类
 class DataBaseConnent {
@@ -60,7 +54,6 @@ class DataBaseConnent {
     private func connectDataBase() {
         if connect == nil {
             connect = MySQL()
-            connect.setOption(MySQLOpt.MYSQL_OPT_RECONNECT, true)
         }
         
         let connected = connect.connect(host: "\(host)", user: user, password: password)
@@ -71,6 +64,7 @@ class DataBaseConnent {
         }
         
         Utils.logError("连接数据库", "成功")
+        connect.setOption(MySQLOpt.MYSQL_OPT_RECONNECT, true)
     }
     
     // MARK: - 选择数据库Scheme
