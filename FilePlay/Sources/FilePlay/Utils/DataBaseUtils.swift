@@ -9,7 +9,7 @@ import Foundation
 import PerfectMySQL 
 
 private let dataBaseName = kProjectName
-private let host = "127.0.0.1"  //数据库IP
+private let host = "106.12.107.176"  //数据库IP
 private let port = "3306"   //数据库端口
 private let user = "doubletcjs"   //数据库用户名
 private let password = "8707gtt04cjsd,./"   //数据库密码
