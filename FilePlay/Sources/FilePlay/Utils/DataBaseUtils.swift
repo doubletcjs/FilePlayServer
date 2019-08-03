@@ -8,14 +8,14 @@
 import Foundation
 import PerfectMySQL 
 
-private let dataBaseName = kProjectName
+private let dataBaseName = kProjectName.lowercased()
 private let host = "106.12.107.176"  //数据库IP
 private let port = "3306"   //数据库端口
 private let user = "doubletcjs"   //数据库用户名
 private let password = "8707gtt04cjsd,./"   //数据库密码
 
 // MARK: - 评论
-public let db_commentt = "comment_table"
+public let db_comment = "comment_table"
 public let db_praise_comment = "praise_comment"
 public let db_report_comment = "report_comment"
 
@@ -70,7 +70,7 @@ class DataBaseConnent {
             return
         }
         
-        Utils.logError("连接数据库", "成功")
+        Utils.logInfo("连接数据库", "成功")
     }
     
     // MARK: - 选择数据库Scheme
@@ -79,15 +79,15 @@ class DataBaseConnent {
     private func selectDataBase(name: String) {
         // 选择具体的数据Schema
         guard connect.selectDatabase(named: name) else {
-            Utils.logError("连接Schema", "错误代码：\(connect.errorCode()) 错误解释：\(connect.errorMessage())")
+            Utils.logInfo("连接Schema", "错误代码：\(connect.errorCode()) 错误解释：\(connect.errorMessage())")
             return
         }
         
-        Utils.logError("连接Schema：\(name)", "成功")
+        Utils.logInfo("连接Schema：\(name)", "成功")
     }
 }
 // MARK: - 操作数据库的基类
-class DataBaseOperator {
+class DataBaseOperator: NSObject {
     var mysql: MySQL {
         get {
             return DataBaseConnent.shareInstance(dataBaseName: dataBaseName)

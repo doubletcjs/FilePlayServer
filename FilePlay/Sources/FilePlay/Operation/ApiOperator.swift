@@ -44,6 +44,10 @@ class BasicRoutes {
             // 更新用户信息
             baseRoutes.add(method: .post, uri: "/updateAccount", handler: AccountOperator().updateAccountHandle(request:response:))
             
+            // MARK: - 用户主页
+            // 用户主页信息
+            baseRoutes.add(method: .post, uri: "/accountHomePage", handler: AccountOperator().accountHomePageHandle(request:response:))
+            
             return baseRoutes
         }
     }

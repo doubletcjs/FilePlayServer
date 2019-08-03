@@ -22,7 +22,7 @@ public let kServerDocumentRoot = "./WebRoot"
 
 private let RequestSuccessCode: String = "1000"
 private let RequestFailureCode: String = "1001"
-private let ResultDataKey = "data"
+let ResultDataKey = "data"
 private let ResultCodeKey = "code"
 private let ResultMessageKey = "msg"
 private var BaseResponseJson: [String : Any] = [ResultDataKey: [], ResultCodeKey: RequestSuccessCode, ResultMessageKey: ""]
@@ -89,6 +89,12 @@ class Utils {
         let dict: [String: Any] = ["日期": Utils.dateToString(date: Date(), format: "yyyy.MM.dd HH:mm:ss:SSS"), "方法名": "\(functionName)", "信息内容": "\(msg)"]
         
         LogFile.error("\(Utils.objectToJson(dict))")
+    }
+    
+    class func logInfo(_ functionName: String, _ msg: Any) -> Void {
+        let dict: [String: Any] = ["日期": Utils.dateToString(date: Date(), format: "yyyy.MM.dd HH:mm:ss:SSS"), "方法名": "\(functionName)", "信息内容": "\(msg)"]
+        
+        LogFile.info("\(Utils.objectToJson(dict))")
     }
     // MARK: - 删除服务器本地文件
     class func deleteLocalFile(_ absolutePath: String) -> Void {

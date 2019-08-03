@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		AE6EFC9422F2E3FD00788557 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EFC9322F2E3FC00788557 /* AccountModel.swift */; };
+		AE6EFC9822F519E900788557 /* NSObject+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EFC9722F519E900788557 /* NSObject+Ext.swift */; };
+		AE6EFC9A22F534C200788557 /* DynamicOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EFC9922F534C200788557 /* DynamicOperator.swift */; };
+		AE6EFC9C22F5371700788557 /* DynamicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EFC9B22F5371700788557 /* DynamicModel.swift */; };
+		AE6EFC9E22F53AD900788557 /* TopicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EFC9D22F53AD900788557 /* TopicModel.swift */; };
+		AE6EFCA022F53B1100788557 /* MovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EFC9F22F53B1100788557 /* MovieModel.swift */; };
 		AE9E895B22E93CB8005CFFA3 /* AccountOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9E895A22E93CB8005CFFA3 /* AccountOperator.swift */; };
 		OBJ_1000 /* NetUDP.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_144 /* NetUDP.swift */; };
 		OBJ_1002 /* PerfectCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "PerfectCrypto::PerfectCrypto::Product" /* PerfectCrypto.framework */; };
@@ -751,6 +756,11 @@
 
 /* Begin PBXFileReference section */
 		AE6EFC9322F2E3FC00788557 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
+		AE6EFC9722F519E900788557 /* NSObject+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Ext.swift"; sourceTree = "<group>"; };
+		AE6EFC9922F534C200788557 /* DynamicOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicOperator.swift; sourceTree = "<group>"; };
+		AE6EFC9B22F5371700788557 /* DynamicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicModel.swift; sourceTree = "<group>"; };
+		AE6EFC9D22F53AD900788557 /* TopicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicModel.swift; sourceTree = "<group>"; };
+		AE6EFC9F22F53B1100788557 /* MovieModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieModel.swift; sourceTree = "<group>"; };
 		AE9E895A22E93CB8005CFFA3 /* AccountOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountOperator.swift; sourceTree = "<group>"; };
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"FilePlay::FilePlay::Product" /* FilePlay */ = {isa = PBXFileReference; lastKnownFileType = text; path = FilePlay; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1290,6 +1300,9 @@
 			isa = PBXGroup;
 			children = (
 				AE6EFC9322F2E3FC00788557 /* AccountModel.swift */,
+				AE6EFC9B22F5371700788557 /* DynamicModel.swift */,
+				AE6EFC9D22F53AD900788557 /* TopicModel.swift */,
+				AE6EFC9F22F53B1100788557 /* MovieModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1299,6 +1312,7 @@
 			children = (
 				OBJ_12 /* DataBaseUtils.swift */,
 				OBJ_13 /* Utils.swift */,
+				AE6EFC9722F519E900788557 /* NSObject+Ext.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1974,6 +1988,7 @@
 			children = (
 				OBJ_10 /* ApiOperator.swift */,
 				AE9E895A22E93CB8005CFFA3 /* AccountOperator.swift */,
+				AE6EFC9922F534C200788557 /* DynamicOperator.swift */,
 			);
 			path = Operation;
 			sourceTree = "<group>";
@@ -2799,10 +2814,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				AE6EFCA022F53B1100788557 /* MovieModel.swift in Sources */,
 				OBJ_678 /* ApiOperator.swift in Sources */,
+				AE6EFC9A22F534C200788557 /* DynamicOperator.swift in Sources */,
 				AE6EFC9422F2E3FD00788557 /* AccountModel.swift in Sources */,
 				AE9E895B22E93CB8005CFFA3 /* AccountOperator.swift in Sources */,
+				AE6EFC9C22F5371700788557 /* DynamicModel.swift in Sources */,
+				AE6EFC9E22F53AD900788557 /* TopicModel.swift in Sources */,
 				OBJ_679 /* DataBaseUtils.swift in Sources */,
+				AE6EFC9822F519E900788557 /* NSObject+Ext.swift in Sources */,
 				OBJ_680 /* Utils.swift in Sources */,
 				OBJ_681 /* main.swift in Sources */,
 			);
