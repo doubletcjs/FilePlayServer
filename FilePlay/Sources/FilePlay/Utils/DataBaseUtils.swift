@@ -60,7 +60,6 @@ class DataBaseConnent {
     private func connectDataBase() {
         if connect == nil {
             connect = MySQL()
-            connect.setOption(MySQLOpt.MYSQL_OPT_RECONNECT, true)
         }
         
         let connected = connect.connect(host: "\(host)", user: user, password: password)
@@ -70,6 +69,7 @@ class DataBaseConnent {
             return
         }
         
+        connect.setOption(MySQLOpt.MYSQL_OPT_RECONNECT, true)
         Utils.logInfo("连接数据库", "成功")
     }
     

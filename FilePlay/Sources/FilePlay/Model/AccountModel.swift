@@ -99,7 +99,7 @@ class AccountModel: DataBaseOperator {
     ///   - loginId: 登录用户id
     ///   - userId: 用户id 二选一
     ///   - mobile: 用户手机 二选一
-    /// - Returns: 返回JSON数据
+    /// - Returns: 返回 用户信息
     func accountQuery(userId: String, mobile: String, loginId: String) -> String {
         let accountStatus = checkAccountQuery(mobile: mobile, nickname: "", userId: userId)
         if accountStatus == 0 {
@@ -187,6 +187,11 @@ class AccountModel: DataBaseOperator {
      * 2. mobile 注册手机
      * 3. password 密码
      */
+    /// - Parameters:
+    ///   - mobile: 注册手机
+    ///   - nickname: 昵称
+    ///   - password: 密码
+    /// - Returns: 用户信息
     func registerQuery(nickname: String, mobile: String, password: String) -> String {
         // MARK: - 检查用户是否存在
         let nameStatus = self.checkAccountQuery(mobile: "", nickname: nickname, userId: "")
@@ -226,8 +231,13 @@ class AccountModel: DataBaseOperator {
      * params [String: Any]
      * 1. mobile 注册手机 (二选一)
      * 2. nickname 昵称 (二选一)
-     * 3. password 新密码
+     * 3. password 密码
      */
+    /// - Parameters:
+    ///   - mobile: 注册手机
+    ///   - nickname: 昵称
+    ///   - password: 密码
+    /// - Returns: 用户信息
     func loginQuery(mobile: String, nickname: String, password: String) -> String {
         let accountStatus = checkAccountQuery(mobile: mobile, nickname: nickname, userId: "")
         if accountStatus == 0 {
@@ -275,6 +285,9 @@ class AccountModel: DataBaseOperator {
      * params [String: Any]
      * 1. userId 必填
      */
+    /// - Parameters:
+    ///   - params: [String: Any]
+    /// - Returns: 用户信息
     func updateAccountQuery(params: [String: Any]) -> String {
         let userId: String = params["userId"] as! String
         
@@ -326,6 +339,10 @@ class AccountModel: DataBaseOperator {
      * 1. mobile 手机号
      * 2. password 新密码
      */
+    /// - Parameters:
+    ///   - mobile: 手机号
+    ///   - password: 新密码
+    /// - Returns: 成功、失败
     func resetPasswordQuery(mobile: String, password: String) -> String {
         let accountStatus = self.checkAccountQuery(mobile: mobile, nickname: "", userId: "")
         if accountStatus == 0 {
@@ -363,5 +380,129 @@ class AccountModel: DataBaseOperator {
         
         return responseJson
     }
+    // MARK: - 用户粉丝列表
+    /// 用户关注列表 A 的关注列表 where authorId==A
+    /// 用户粉丝列表 A 的粉丝列表 where userId==A
+    /// - Parameters:
+    ///   - userId: 用户id
+    ///   - loginId: 当前登录用户id
+    ///   - currentPage: 当前页
+    ///   - pageSize: pageSize
+    /// - Returns: 用户动态数
+    func accountAttentionFanListQuery(userId: String, loginId: String, currentPage: Int, pageSize: Int, isAttention: Bool) -> String {
+        var type = "userId"
+        var typeName = "粉丝"
+        if isAttention == true {
+            type = "authorId"
+            typeName = "关注"
+        }
+        
+        var originalKeys: [String] = [
+            "userId",
+            "nickname",
+            "portrait",
+            "gender"]
+        
+        var tableKeys: [String] = [
+            "\(db_account).userId",
+            "\(db_account).nickname",
+            "\(db_account).portrait",
+            "\(db_account).gender"]
+        
+        var statements: [String] = ["LEFT JOIN \(db_account) ON (\(db_account).userId = \(db_attention_fan).userId)"]
+        if loginId.count > 0 {
+            originalKeys.append("isAttention")
+            tableKeys.append("COUNT(DISTINCT db_attentionFan.objectId) isAttention")
+            statements.append("LEFT JOIN \(db_attention_fan) db_attentionFan ON (db_attentionFan.authorId = '\(loginId)')")
+        }
+        
+        let statement = "SELECT \(tableKeys.joined(separator: ", ")) FROM \(db_attention_fan) \(statements.joined(separator: " ")) WHERE \(db_attention_fan).\(type) = '\(userId)' GROUP BY \(db_attention_fan).objectId LIMIT \(currentPage*pageSize), \(pageSize)"
+        
+        if mysql.query(statement: statement) == false {
+            Utils.logError("用户\(typeName)列表", mysql.errorMessage())
+            responseJson = Utils.failureResponseJson("用户\(typeName)列表查询失败")
+        } else {
+            var fanList = [[String: Any]]()
+            let results = mysql.storeResults()
+            results?.forEachRow { (row) in
+                var dict: [String: Any] = [:]
+                for idx in 0..<row.count {
+                    let key = originalKeys[idx]
+                    let value = row[idx]
+                    dict[key] = value
+                    
+                    if dict["isAttention"] != nil {
+                        if Int(dict["isAttention"] as! String) != 0 {
+                            dict["isAttention"] = true
+                        } else {
+                            dict["isAttention"] = false
+                        }
+                    }
+                }
+                
+                fanList.append(dict)
+            }
+            
+            responseJson = Utils.successResponseJson(fanList)
+        }
+        
+        return responseJson
+    }
+    // MARK: - 关注、取消关注
+    /// - Parameters:
+    ///   - userId: 被关注人
+    ///   - loginId: 关注人
+    /// - Returns: 返回JSON数据 状态 0 查询失败 不改变状态 1 已关注 2 未关注
+    func accountAttentionStatusQuery(userId: String, loginId: String) -> String {
+        let tableName = db_attention_fan
+        // 状态 0 查询失败 不改变状态 1 已关注 2 未关注
+        func isAttention() -> Int {
+            let statement = "SELECT COUNT(DISTINCT \(tableName).objectId) attentionCount FROM \(tableName) WHERE \(tableName).authorId = '\(loginId)' AND \(tableName).userId = '\(userId)'"
+            if mysql.query(statement: statement) == false {
+                Utils.logError("是否关注", mysql.errorMessage())
+                return 0
+            } else {
+                let results = mysql.storeResults()!
+                if results.numRows() > 0 {
+                    var status: Int = 2
+                    results.forEachRow { (row) in
+                        for idx in 0..<row.count {
+                            let value = row[idx]! as String
+                            if Int(value)! > 0 {
+                                status = 1
+                            }
+                        }
+                    }
+                    
+                    return status
+                } else {
+                    return 0
+                }
+            }
+        }
+        
+        if isAttention() == 1 {
+            // 取消关注
+            let statement = "DELETE \(tableName) FROM \(tableName) WHERE \(tableName).userId = '\(userId)' AND \(tableName).authorId = '\(loginId)'"
+            if mysql.query(statement: statement) == false {
+                Utils.logError("取消关注", mysql.errorMessage())
+                responseJson = Utils.successResponseJson("0")
+            } else {
+                responseJson = Utils.successResponseJson("\(isAttention())")
+            }
+        } else if isAttention() == 2 {
+            // 添加关注
+            let statement = "INSERT INTO \(tableName) (authorId, userId) VALUES ('\(loginId)', '\(userId)')"
+            if mysql.query(statement: statement) == false {
+                Utils.logError("添加关注", mysql.errorMessage())
+                responseJson = Utils.successResponseJson("0")
+            } else {
+                responseJson = Utils.successResponseJson("\(isAttention())")
+            }
+        } else {
+            responseJson = Utils.successResponseJson("0")
+        }
     
+        return responseJson
+    }
 }

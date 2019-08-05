@@ -43,6 +43,12 @@ class BasicRoutes {
             baseRoutes.add(method: .post, uri: "/accountInfo", handler: AccountOperator().accountInfoHandle(request:response:))
             // 更新用户信息
             baseRoutes.add(method: .post, uri: "/updateAccount", handler: AccountOperator().updateAccountHandle(request:response:))
+            // 粉丝列表
+            baseRoutes.add(method: .post, uri: "/accountFanList", handler: AccountOperator().accountFanListHandle(request:response:))
+            // 关注列表
+            baseRoutes.add(method: .post, uri: "/accountAttentionList", handler: AccountOperator().accountAttentionListHandle(request:response:))
+            // 关注、取消关注
+            baseRoutes.add(method: .post, uri: "/accountAttentionStatus", handler: AccountOperator().accountAttentionStatusHandle(request:response:))
             
             // MARK: - 用户主页
             // 用户主页信息

@@ -222,4 +222,123 @@ class AccountOperator: NSObject {
         response.appendBody(string: responseJson)
         response.completed()
     }
+    // MARK: - 用户粉丝列表 A(userId) 的粉丝列表 where userId==A
+    /**
+     * params [String: Any]
+     * 1. userId 用户id
+     * 2. loginId 登录用户id
+     * 3. currentPage
+     * 4. pageSize
+     */
+    func accountFanListHandle(request: HTTPRequest, response: HTTPResponse) {
+        var userId: String = ""
+        var loginId: String = ""
+        var currentPage: String = ""
+        var pageSize: String = ""
+        
+        if request.param(name: "userId") != nil {
+            userId = request.param(name: "userId")!
+        }
+        
+        if request.param(name: "loginId") != nil {
+            loginId = request.param(name: "loginId")!
+        }
+        
+        if request.param(name: "currentPage") != nil {
+            currentPage = request.param(name: "currentPage")!
+        }
+        
+        if request.param(name: "pageSize") != nil {
+            pageSize = request.param(name: "pageSize")!
+        }
+        
+        guard userId.count > 0 && currentPage.count > 0 && pageSize.count > 0 else {
+            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
+            response.completed()
+            
+            return
+        }
+        
+        if Int(pageSize)! < 5 {
+            pageSize = "5"
+        }
+        
+        let responseJson = AccountModel().accountAttentionFanListQuery(userId: userId, loginId: loginId, currentPage: Int(currentPage)!, pageSize: Int(pageSize)!, isAttention: false)
+        response.appendBody(string: responseJson)
+        response.completed()
+    }
+    // MARK: - 用户关注列表 A 的关注列表 where authorId==A
+    /**
+     * params [String: Any]
+     * 1. userId 用户id
+     * 2. loginId 登录用户id
+     * 3. currentPage
+     * 4. pageSize
+     */
+    func accountAttentionListHandle(request: HTTPRequest, response: HTTPResponse) {
+        var userId: String = ""
+        var loginId: String = ""
+        var currentPage: String = ""
+        var pageSize: String = ""
+        
+        if request.param(name: "userId") != nil {
+            userId = request.param(name: "userId")!
+        }
+        
+        if request.param(name: "loginId") != nil {
+            loginId = request.param(name: "loginId")!
+        }
+        
+        if request.param(name: "currentPage") != nil {
+            currentPage = request.param(name: "currentPage")!
+        }
+        
+        if request.param(name: "pageSize") != nil {
+            pageSize = request.param(name: "pageSize")!
+        }
+        
+        guard userId.count > 0 && currentPage.count > 0 && pageSize.count > 0 else {
+            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
+            response.completed()
+            
+            return
+        }
+        
+        if Int(pageSize)! < 5 {
+            pageSize = "5"
+        }
+        
+        let responseJson = AccountModel().accountAttentionFanListQuery(userId: userId, loginId: loginId, currentPage: Int(currentPage)!, pageSize: Int(pageSize)!, isAttention: true)
+        response.appendBody(string: responseJson)
+        response.completed()
+    }
+    // MARK: - 关注、取消关注
+    /**
+     * params [String: Any]
+     * 1. userId 被关注人
+     * 2. loginId 关注人
+     */
+    func accountAttentionStatusHandle(request: HTTPRequest, response: HTTPResponse) {
+        var userId: String = ""
+        var loginId: String = ""
+        
+        if request.param(name: "userId") != nil {
+            userId = request.param(name: "userId")!
+        }
+        
+        if request.param(name: "loginId") != nil {
+            loginId = request.param(name: "loginId")!
+        }
+        
+        guard userId.count > 0 && loginId.count > 0 else {
+            response.setBody(string: Utils.failureResponseJson("请求参数错误"))
+            response.completed()
+            
+            return
+        }
+        
+        let responseJson = AccountModel().accountAttentionStatusQuery(userId: userId, loginId: loginId)
+        response.appendBody(string: responseJson)
+        response.completed()
+    }
 }
