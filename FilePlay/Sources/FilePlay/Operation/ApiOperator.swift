@@ -9,6 +9,7 @@ import Foundation
 import PerfectLib
 import PerfectHTTP
 import PerfectHTTPServer
+import PerfectCURL
 
 // localhost html
 private let LocalhostHtml: String = "<html><meta charset=\"UTF-8\"><title>Api Server</title><body>接口服务器<br>V0.0.1</body></html>"
@@ -50,9 +51,19 @@ class BasicRoutes {
             // 关注、取消关注
             baseRoutes.add(method: .post, uri: "/accountAttentionStatus", handler: AccountOperator().accountAttentionStatusHandle(request:response:))
             
+            // MARK: - 电影
+            // 收藏
+            baseRoutes.add(method: .post, uri: "/movieCollectionStatus", handler: MovieOperater().movieCollectionStatusHandle(request:response:))
+            // 已看
+            baseRoutes.add(method: .post, uri: "/movieWatchStatus", handler: MovieOperater().movieWatchStatusHandle(request:response:))
+            // 更新电影
+            baseRoutes.add(method: .post, uri: "/updateMovie", handler: MovieOperater().updateMovieHandle(request:response:))
+            // 电影详情
+            baseRoutes.add(method: .post, uri: "/movieDetail", handler: MovieOperater().movieDetailHandle(request:response:))
+            
             // MARK: - 用户主页
             // 用户主页信息
-            baseRoutes.add(method: .post, uri: "/accountHomePage", handler: AccountOperator().accountHomePageHandle(request:response:))
+            baseRoutes.add(method: .post, uri: "/accountHomePage", handler: AccountOperator().accountHomePageHandle(request:response:)) 
             
             return baseRoutes
         }

@@ -2,7 +2,7 @@
 //  AccountModel.swift
 //  FilePlay
 //
-//  Created by 万烨 on 2019/8/1.
+//  Created by 4work on 2019/8/1.
 //
 
 import Foundation
@@ -147,7 +147,7 @@ class AccountModel: DataBaseOperator {
                 whereStatement = "\(db_account).mobile = '\(mobile)'"
             }
             
-            let statement = "SELECT \(tableKeys.joined(separator: ", ")) FROM \(db_account) \(contingency.joined(separator: " ")) WHERE \(whereStatement) GROUP BY \(db_account).userId"
+            let statement = "SELECT \(tableKeys.joined(separator: ", ")) FROM \(db_account) \(contingency.joined(separator: " ")) WHERE \(whereStatement)"
             
             if mysql.query(statement: statement) == false {
                 Utils.logError("获取用户信息", mysql.errorMessage())
@@ -459,7 +459,7 @@ class AccountModel: DataBaseOperator {
         func isAttention() -> Int {
             let statement = "SELECT COUNT(DISTINCT \(tableName).objectId) attentionCount FROM \(tableName) WHERE \(tableName).authorId = '\(loginId)' AND \(tableName).userId = '\(userId)'"
             if mysql.query(statement: statement) == false {
-                Utils.logError("是否关注", mysql.errorMessage())
+                Utils.logError("是否关注用户", mysql.errorMessage())
                 return 0
             } else {
                 let results = mysql.storeResults()!
