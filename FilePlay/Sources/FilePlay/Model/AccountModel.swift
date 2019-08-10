@@ -479,7 +479,7 @@ class AccountModel: DataBaseOperator {
                     return 0
                 }
             }
-        }
+        } 
         
         if isAttention() == 1 {
             // 取消关注

@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/PerfectlySoft/Perfect-HTTP.git",
         "state": {
           "branch": null,
-          "revision": "a730fecd51cc7adca74adb260f5bcc0ad1378583",
-          "version": "3.2.6"
+          "revision": "122affd0bb5090c61bdc1e50e7f32ab6457d228e",
+          "version": "3.3.0"
         }
       },
       {
