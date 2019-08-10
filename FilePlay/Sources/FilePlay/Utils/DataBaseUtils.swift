@@ -46,6 +46,7 @@ class DataBaseConnent {
     public static func shareInstance(dataBaseName: String) -> MySQL {
         if instance == nil {
             instance = DataBaseConnent(dataBaseName: dataBaseName).connect
+            instance.setOption(MySQLOpt.MYSQL_OPT_RECONNECT, true)
         }
         
         return instance
@@ -60,6 +61,7 @@ class DataBaseConnent {
     private func connectDataBase() {
         if connect == nil {
             connect = MySQL()
+            connect.setOption(MySQLOpt.MYSQL_OPT_RECONNECT, true)
         }
         
         let connected = connect.connect(host: "\(host)", user: user, password: password)

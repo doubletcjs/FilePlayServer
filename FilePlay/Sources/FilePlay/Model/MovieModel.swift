@@ -44,6 +44,10 @@ class MovieModel: DataBaseOperator {
      *     电影混合id 前缀 0_ 电影 1_ 剧集 + tmdbid
      */
     @objc var movieHybridId: String = ""
+    /**
+     *    电影时长
+     */
+    @objc var movieRuntime: String = ""
 /*
     // MARK: - 联表查询
     /**
@@ -132,6 +136,7 @@ class MovieModel: DataBaseOperator {
             "\(db_movie).movieReleaseDate",
             "\(db_movie).movieOriginalName",
             "\(db_movie).moviePoster",
+            "\(db_movie).movieRuntime",
             "COUNT(DISTINCT db_movie_collection.movieId) isCollection"]
         
         let contingency: [String] = [
@@ -298,7 +303,6 @@ class MovieModel: DataBaseOperator {
         let loginId: String = params["loginId"] as! String
         
         let model = MovieModel()
-        model.movieId = params["movieId"] as! String
         model.movieName = params["movieName"] as! String
         model.movieOriginalName = params["movieOriginalName"] as! String
         model.movieGenres = params["movieGenres"] as! String
@@ -307,10 +311,11 @@ class MovieModel: DataBaseOperator {
         model.movieReleaseDate = params["movieReleaseDate"] as! String
         model.moviePoster = params["moviePoster"] as! String
         model.movieHybridId = params["movieHybridId"] as! String
+        model.movieRuntime = params["movieRuntime"] as! String
         
         var tempMovieId = ""
         func movieExist() -> Void {
-            let statement = "SELECT movieId FROM \(db_movie) WHERE \(db_movie).movieHybridId = '\(movieHybridId)'"
+            let statement = "SELECT movieId FROM \(db_movie) WHERE \(db_movie).movieHybridId = '\(model.movieHybridId)'"
             
             if mysql.query(statement: statement) == false {
                 Utils.logError("电影是否存在", mysql.errorMessage())
@@ -326,8 +331,8 @@ class MovieModel: DataBaseOperator {
         movieExist()
         if tempMovieId.count == 0 {
             //不存在
-            let values = "('\(model.movieId)', '\(Utils.fixSingleQuotes(model.movieName))', '\(model.movieGenres)', '\(model.movieVoteAverage)', '\(model.movieVoteCount)', '\(model.movieReleaseDate)', '\(Utils.fixSingleQuotes(model.movieOriginalName))', '\(model.moviePoster)', \(model.movieHybridId))"
-            let statement = "INSERT INTO \(db_movie) (movieId, movieName, movieGenres, movieVoteAverage, movieVoteCount, movieReleaseDate, movieOriginalName, moviePoster, movieHybridId) VALUES \(values)"
+            let values = "('\(Utils.fixSingleQuotes(model.movieName))', '\(model.movieGenres)', '\(model.movieVoteAverage)', '\(model.movieVoteCount)', '\(model.movieReleaseDate)', '\(Utils.fixSingleQuotes(model.movieOriginalName))', '\(model.moviePoster)', '\(model.movieHybridId)', '\(model.movieRuntime)')"
+            let statement = "INSERT INTO \(db_movie) (movieName, movieGenres, movieVoteAverage, movieVoteCount, movieReleaseDate, movieOriginalName, moviePoster, movieHybridId, movieRuntime) VALUES \(values)"
             
             if mysql.query(statement: statement) == false {
                 Utils.logError("插入电影详情", mysql.errorMessage())
@@ -348,7 +353,7 @@ class MovieModel: DataBaseOperator {
                 tableKeys.append("\(db_movie)."+key)
             }
             
-            let statement = "SELECT \(tableKeys.joined(separator: ", ")) FROM \(db_movie) WHERE \(db_movie).movieId = '\(model.movieId)'"
+            let statement = "SELECT \(tableKeys.joined(separator: ", ")) FROM \(db_movie) WHERE \(db_movie).movieId = '\(tempMovieId)'"
             if mysql.query(statement: statement) == false {
                 Utils.logError("更新电影详情", mysql.errorMessage())
             } else {
@@ -364,10 +369,6 @@ class MovieModel: DataBaseOperator {
                 }
                 
                 //比较
-                if model.movieId != dict["movieId"] as! String {
-                    conditions.append("movieId = '\(model.movieId)'")
-                }
-                
                 if model.movieName != dict["movieName"] as! String {
                     conditions.append("movieName = '\(Utils.fixSingleQuotes(model.movieName))'")
                 }
@@ -400,15 +401,19 @@ class MovieModel: DataBaseOperator {
                     conditions.append("movieHybridId = '\(model.movieHybridId)'")
                 }
                 
+                if model.movieRuntime != dict["movieRuntime"] as! String {
+                    conditions.append("movieRuntime = '\(model.movieRuntime)'")
+                }
+                
                 if conditions.count > 0 {
-                    let statement = "UPDATE \(db_movie) SET \(conditions.joined(separator: ", ")) WHERE \(db_movie).movieId = '\(model.movieId)'"
+                    let statement = "UPDATE \(db_movie) SET \(conditions.joined(separator: ", ")) WHERE \(db_movie).movieId = '\(tempMovieId)'"
                     if mysql.query(statement: statement) == false {
                         Utils.logError("更新电影详情", mysql.errorMessage())
                     }
                 }
             }
             
-            responseJson = self.movieDetailQuery(loginId: loginId, movieId: model.movieId)
+            responseJson = self.movieDetailQuery(loginId: loginId, movieId: tempMovieId)
         }
         
         return responseJson
