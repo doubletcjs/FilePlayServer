@@ -11,7 +11,7 @@ import PerfectLogger
 import PerfectLib
 
 public let kProjectName: String = "FilePlay" 
-public let kServerPort: UInt16 = 6968
+public let kServerPort: UInt16 = 5179
 public let kServerName = "localhost"
 
 #if os(Linux)
