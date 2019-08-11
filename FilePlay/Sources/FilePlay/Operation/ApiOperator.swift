@@ -60,6 +60,8 @@ class BasicRoutes {
             baseRoutes.add(method: .post, uri: "/updateMovie", handler: MovieOperater().updateMovieHandle(request:response:))
             // 电影详情
             baseRoutes.add(method: .post, uri: "/movieDetail", handler: MovieOperater().movieDetailHandle(request:response:))
+            // 电影动态列表
+            baseRoutes.add(method: .post, uri: "/movieDynamicList", handler: DynamicOperator().movieDynamicListHandle(request:response:))
             
             // MARK: - 用户主页
             // 用户主页信息

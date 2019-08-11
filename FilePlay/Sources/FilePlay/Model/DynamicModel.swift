@@ -93,15 +93,15 @@ class DynamicModel: DataBaseOperator {
         
         return count
     }
-    // MARK: - 用户动态列表
+    // MARK: - 查询动态列表
     ///
     /// - Parameters:
-    ///   - userId: 用户id
+    ///   - sql: 查询条件
     ///   - loginId: 当前登录用户id
     ///   - currentPage: 当前页
     ///   - pageSize: pageSize
-    /// - Returns: 用户动态数
-    func accountDynamicListQuery(userId: String, loginId: String, currentPage: Int, pageSize: Int) -> String {
+    /// - Returns: 动态列表
+    private func dynamicListQuery(sql: String, loginId: String, currentPage: Int, pageSize: Int) -> String {
         var originalKeys: [String] = DynamicModel.getAllPropertys()
         
         var tableKeys: [String] = [
@@ -155,7 +155,7 @@ class DynamicModel: DataBaseOperator {
         tableKeys.append("\(db_movie).moviePoster")
         contingency.append("LEFT JOIN \(db_movie) ON (\(db_movie).movieId = \(db_dynamic).movieId)")
         
-        let statement = "SELECT \(tableKeys.joined(separator: ", ")) FROM \(db_dynamic) \(contingency.joined(separator: " ")) WHERE \(db_dynamic).authorId = '\(userId)' GROUP BY \(db_dynamic).dynamicId DESC LIMIT \(currentPage*pageSize), \(pageSize)"
+        let statement = "SELECT \(tableKeys.joined(separator: ", ")) FROM \(db_dynamic) \(contingency.joined(separator: " ")) \(sql) GROUP BY \(db_dynamic).dynamicId DESC LIMIT \(currentPage*pageSize), \(pageSize)"
         
         if mysql.query(statement: statement) == false {
             Utils.logError("用户动态列表", mysql.errorMessage())
@@ -210,5 +210,27 @@ class DynamicModel: DataBaseOperator {
         }
         
         return responseJson
+    }
+    // MARK: - 用户动态列表
+    ///
+    /// - Parameters:
+    ///   - userId: 用户id
+    ///   - loginId: 当前登录用户id
+    ///   - currentPage: 当前页
+    ///   - pageSize: pageSize
+    /// - Returns: 用户动态列表
+    func accountDynamicListQuery(userId: String, loginId: String, currentPage: Int, pageSize: Int) -> String {
+        return self.dynamicListQuery(sql: "WHERE \(db_dynamic).authorId = '\(userId)'", loginId: loginId, currentPage: currentPage, pageSize: pageSize)
+    }
+    // MARK: - 电影动态列表
+    ///
+    /// - Parameters:
+    ///   - movieId: 电影id
+    ///   - loginId: 当前登录用户id
+    ///   - currentPage: 当前页
+    ///   - pageSize: pageSize
+    /// - Returns: 电影动态列表
+    func movieDynamicListQuery(movieId: String, loginId: String, currentPage: Int, pageSize: Int) -> String {
+        return self.dynamicListQuery(sql: "WHERE \(db_dynamic).movieId = '\(movieId)'", loginId: loginId, currentPage: currentPage, pageSize: pageSize)
     }
 }

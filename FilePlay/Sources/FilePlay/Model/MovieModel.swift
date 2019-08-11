@@ -327,22 +327,26 @@ class MovieModel: DataBaseOperator {
         model.movieHybridId = params["movieHybridId"] as! String
         model.movieRuntime = params["movieRuntime"] as! String
         
-        var tempMovieId = ""
-        func movieExist() -> Void {
+        func movieExist() -> String {
             let statement = "SELECT movieId FROM \(db_movie) WHERE \(db_movie).movieHybridId = '\(model.movieHybridId)'"
             
             if mysql.query(statement: statement) == false {
                 Utils.logError("电影是否存在", mysql.errorMessage())
             } else {
                 let results = mysql.storeResults()!
+                var tempMovieId = ""
                 results.forEachRow { (row) in
-                    tempMovieId = row[0]! as String
+                    tempMovieId = row[0]!
                 }
+                
+                return tempMovieId
             }
+            
+            return ""
         }
         
         //是否已存在
-        movieExist()
+        var tempMovieId = movieExist()
         if tempMovieId.count == 0 {
             //不存在
             let values = "('\(Utils.fixSingleQuotes(model.movieName))', '\(model.movieGenres)', '\(model.movieVoteAverage)', '\(model.movieVoteCount)', '\(model.movieReleaseDate)', '\(Utils.fixSingleQuotes(model.movieOriginalName))', '\(model.moviePoster)', '\(model.movieHybridId)', '\(model.movieRuntime)')"
@@ -352,7 +356,7 @@ class MovieModel: DataBaseOperator {
                 Utils.logError("插入电影详情", mysql.errorMessage())
                 responseJson = Utils.failureResponseJson("插入电影详情")
             } else {
-                movieExist()
+                tempMovieId = movieExist()
                 if tempMovieId.count > 0 {
                     responseJson = self.movieDetailQuery(loginId: loginId, movieId: tempMovieId)
                 } else {
