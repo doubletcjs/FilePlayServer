@@ -8,6 +8,13 @@
 import Foundation
 
 class TopicModel: DataBaseOperator {
+    class func getAllPropertys() -> [String] {
+        return [
+            "topicId",
+            "topicName",
+            "createDate"];
+    }
+    
     /**
      *     话题id
      */

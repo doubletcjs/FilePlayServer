@@ -8,6 +8,20 @@
 import Foundation
 
 class MovieModel: DataBaseOperator {
+    class func getAllPropertys() -> [String] {
+        return [
+            "movieId",
+            "movieName",
+            "movieGenres",
+            "movieVoteAverage",
+            "movieVoteCount",
+            "movieReleaseDate",
+            "movieOriginalName",
+            "moviePoster",
+            "movieHybridId",
+            "movieRuntime"];
+    }
+    
     /**
      *     电影id
      */

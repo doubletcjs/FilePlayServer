@@ -8,6 +8,17 @@
 import Foundation
 
 class AccountModel: DataBaseOperator {
+    class func getAllPropertys() -> [String] {
+        return [
+            "userId",
+            "nickname",
+            "portrait",
+            "gender",
+            "mobile",
+            "date",
+            "introduce"];
+    }
+    
     // MARK: - 基本内容
     /**
      *     用户id

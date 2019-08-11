@@ -8,6 +8,15 @@
 import Foundation
 
 class DynamicModel: DataBaseOperator {
+    class func getAllPropertys() -> [String] {
+        return [
+            "dynamicId",
+            "content",
+            "postDate",
+            "imageUrls",
+            "imageWH"];
+    }
+    
     // MARK: - 基本内容
     /**
      *     动态id
