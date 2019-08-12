@@ -332,6 +332,7 @@ class MovieModel: DataBaseOperator {
             
             if mysql.query(statement: statement) == false {
                 Utils.logError("电影是否存在", mysql.errorMessage())
+                return "-1"
             } else {
                 let results = mysql.storeResults()!
                 var tempMovieId = ""
@@ -341,12 +342,15 @@ class MovieModel: DataBaseOperator {
                 
                 return tempMovieId
             }
-            
-            return ""
         }
         
         //是否已存在
         var tempMovieId = movieExist()
+        if tempMovieId == "-1" {
+            responseJson = Utils.failureResponseJson("电影详情获取失败")
+            return responseJson
+        }
+        
         if tempMovieId.count == 0 {
             //不存在
             let values = "('\(Utils.fixSingleQuotes(model.movieName))', '\(model.movieGenres)', '\(model.movieVoteAverage)', '\(model.movieVoteCount)', '\(model.movieReleaseDate)', '\(Utils.fixSingleQuotes(model.movieOriginalName))', '\(model.moviePoster)', '\(model.movieHybridId)', '\(model.movieRuntime)')"
