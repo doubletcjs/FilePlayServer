@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE7F9C0F2303E4800007FDF7 /* TopicOperater.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7F9C0E2303E4800007FDF7 /* TopicOperater.swift */; };
 		OBJ_1001 /* PerfectCRUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "PerfectCRUD::PerfectCRUD::Product" /* PerfectCRUD.framework */; };
 		OBJ_1008 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_48 /* Package.swift */; };
 		OBJ_1013 /* Net.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_148 /* Net.swift */; };
@@ -756,6 +757,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AE7F9C0E2303E4800007FDF7 /* TopicOperater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicOperater.swift; sourceTree = "<group>"; };
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"FilePlay::FilePlay::Product" /* FilePlay */ = {isa = PBXFileReference; lastKnownFileType = text; path = FilePlay; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
@@ -1378,6 +1380,7 @@
 				OBJ_16 /* ApiOperator.swift */,
 				OBJ_17 /* DynamicOperator.swift */,
 				OBJ_18 /* MovieOperater.swift */,
+				AE7F9C0E2303E4800007FDF7 /* TopicOperater.swift */,
 			);
 			path = Operation;
 			sourceTree = "<group>";
@@ -1866,7 +1869,7 @@
 			name = "PerfectCRUD 1.2.3";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -1875,7 +1878,6 @@
 				OBJ_26 /* Dependencies */,
 				OBJ_423 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_50 /* PerfectCRUD */ = {
@@ -2503,7 +2505,7 @@
 				English,
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_423 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -2842,6 +2844,7 @@
 			files = (
 				OBJ_688 /* AccountModel.swift in Sources */,
 				OBJ_689 /* DynamicModel.swift in Sources */,
+				AE7F9C0F2303E4800007FDF7 /* TopicOperater.swift in Sources */,
 				OBJ_690 /* MovieModel.swift in Sources */,
 				OBJ_691 /* TopicModel.swift in Sources */,
 				OBJ_692 /* AccountOperator.swift in Sources */,

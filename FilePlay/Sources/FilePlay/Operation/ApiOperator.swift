@@ -63,6 +63,12 @@ class BasicRoutes {
             // 电影动态列表
             baseRoutes.add(method: .post, uri: "/movieDynamicList", handler: DynamicOperator().movieDynamicListHandle(request:response:))
             
+            // MARK: - 话题
+            // 创建话题
+            baseRoutes.add(method: .post, uri: "/createTopic", handler: TopicOperater().createTopicHandle(request:response:))
+            // 查询话题列表
+            baseRoutes.add(method: .post, uri: "/topicSearch", handler: TopicOperater().topicSearchListHandle(request:response:))
+            
             // MARK: - 用户主页
             // 用户主页信息
             baseRoutes.add(method: .post, uri: "/accountHomePage", handler: AccountOperator().accountHomePageHandle(request:response:)) 
